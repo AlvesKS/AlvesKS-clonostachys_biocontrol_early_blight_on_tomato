@@ -255,7 +255,7 @@ ggsave("figs/efficacy_met.png", dpi = 600, height = 4, width = 5)
 ```{r}
 susp %>% 
   bind_rows(metab) %>% 
-  filter(!tratamento %in% c("water", "UCBV07+17", "UCBV133+7")) %>% #filtra tratamentos indesejados
+  filter(!tratamento %in% c("water", "UCBV07+17", "UCBV133+07")) %>% #filtra tratamentos indesejados
   ggplot(aes(reorder(tratamento,mean) ,mean*100, color = meio))+
 
   geom_point(size = 3, position = position_dodge(width = 1))+
