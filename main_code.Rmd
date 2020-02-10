@@ -1,0 +1,275 @@
+% Analysis
+
+# Packages
+
+```{r message=FALSE, warning=FALSE}
+library (tidyverse)
+library(gsheet)
+library(ggthemes)
+library(readxl)
+library(agricolae)
+library(cowplot)
+library(emmeans)
+```
+
+# Suspension
+
+## Loading data
+
+```{r}
+url= "https://docs.google.com/spreadsheets/d/1N-btyRC_VxrhkS__nMGMGEZ9RBGOc2smMPZ4GS32GuM/edit?usp=sharing"
+
+data=gsheet2tbl(url)
+```
+
+Histograms of the severity of each treatment
+```{r}
+data %>% 
+  na.omit(sev) %>% 
+  ggplot(aes(sev))+
+  geom_histogram()+
+  facet_wrap(~tratamento)
+
+```
+
+```{r}
+data %>% 
+  ggplot(aes(time_dai,sev, color= tratamento))+
+  geom_point()+
+   facet_wrap(~tratamento)
+```
+
+```{r}
+data %>% 
+  ggplot(aes(time_dai,sev, color= tratamento, group = time_dai))+
+  geom_jitter(shape = 1)+
+  geom_boxplot(outlier.colour = NA, fill = NA)+
+  facet_wrap(~tratamento)+
+  theme_minimal_hgrid()+
+  labs(color = "")+
+  theme(legend.position = "none")
+```
+
+
+```{r}
+ data %>% 
+  filter(time_dai == max(time_dai)) %>% 
+  ggplot(aes(reorder(tratamento,-sev), sev))+
+  geom_jitter(shape =1, size = 2)+
+  geom_boxplot(fill = NA, size = .7)+
+  
+  theme_minimal_hgrid()+
+  theme(axis.text.x = element_text(angle = 45, hjust = 1,))+
+  labs(x = "",
+       y = "Final severity (%)")
+ggsave("figs/box_susp.png", dpi = 600, height = 4, width = 7)
+```
+
+Filtering just the severity evaluated at the last day
+
+```{r}
+data_sf= data %>% 
+  filter(time_dai == max(time_dai))
+```
+
+
+# Beta regression
+
+```{r}
+library(betareg)
+```
+
+```{r}
+data_sf2 = data_sf%>% 
+  mutate(sev = sev/100,
+         sev = case_when(sev == 0 ~ 0.0001, 
+                         sev > 0 ~ sev))
+lm3 = betareg(sev ~ tratamento, data = data_sf2)
+summary(lm3)
+```
+
+## Tukey test
+Mean severity comparision
+```{r}
+em3 = emmeans(lm3, "tratamento", type  = "response")
+multcomp::cld(em3,Letters = letters, reversed = T)
+```
+
+## Efficacy 
+```{r}
+conf3 = confint(lm3)[1:13,]
+susp = data.frame(em3) %>% 
+  select(tratamento) %>%
+  mutate(logC = as.matrix(summary(lm3)$coefficients$mean[,1]),
+         se = as.matrix(summary(lm3)$coefficients$mean[,2]),
+         mean = 1-(exp(as.matrix(summary(lm3)$coefficients$mean[,1])))) %>% 
+  mutate(CL = 1-exp(conf3[,1]),
+         CU = 1-exp(conf3[,2])) %>% 
+    filter(!tratamento %in% c("CHECK")) %>% 
+  mutate(meio =  "Suspension")
+susp
+```
+
+
+# Efficacy visualization
+
+```{r}
+conf3 = confint(lm3)[1:13,]
+data.frame(em3) %>% 
+  select(tratamento) %>%
+  mutate(logC = as.matrix(summary(lm3)$coefficients$mean[,1]),
+         se = as.matrix(summary(lm3)$coefficients$mean[,2]),
+         mean = 1-(exp(as.matrix(summary(lm3)$coefficients$mean[,1])))) %>% 
+  mutate(CL = 1-exp(conf3[,1]),
+         CU = 1-exp(conf3[,2])) %>% 
+    filter(!tratamento %in% c("CHECK")) %>% 
+  # mutate(model = "betareg") %>% 
+  # bind_rows(eff) %>%
+  ggplot(aes(reorder(tratamento,mean) ,mean*100))+
+
+  geom_point(size = 3, position = position_dodge(width = 1))+
+  geom_errorbar(aes(ymin =CU*100, ymax = CL*100 ), width = 0.0,
+                position = position_dodge(width = 1), size =1)+
+  scale_color_calc()+
+  labs(x = "",
+       y ="Control efficacy (%)",
+       color ="")+
+  theme_bw()+
+  theme(legend.position = "bottom")+
+  coord_flip()
+ggsave("figs/efficacy_suspen.png", dpi = 600, height = 4, width = 5)
+
+```
+
+
+# Metabolites
+
+```{r}
+met = gsheet2tbl("https://docs.google.com/spreadsheets/d/10-nluFRhVzPLQPSczDEr9szKciWXNxcnart3ZAfii7M/edit?usp=sharing")
+met
+```
+
+## Tidying the data
+```{r}
+met_sf= met %>% 
+  separate(tratamento, into =c("tratamento" ,"cond"))%>% 
+  mutate(cond = case_when(is.na(cond) ~ "extrato",
+                          !is.na(cond) ~ cond)) %>% 
+  filter(cond != "alt") %>% 
+  filter(time_dai == max(time_dai)) %>% 
+  mutate(tratamento =  case_when(tratamento == "agua" ~ "Check",
+                                 tratamento == "extrato" ~ "Pathogen",
+                                 tratamento != "extrato" &  tratamento != "agua"~ tratamento)) %>% 
+  filter(tratamento != "controle")%>% 
+filter(tratamento != "Water") 
+```
+
+
+Final severity
+```{r}
+met_sf%>% 
+  filter(time_dai == max(time_dai)) %>% 
+  ggplot(aes(reorder(tratamento,-sev), sev))+
+  geom_jitter(shape =1, size = 2)+
+  geom_boxplot(fill = NA, size = .7)+
+  
+  theme_minimal_hgrid()+
+  theme(axis.text.x = element_text(angle = 45, hjust = 1,))+
+  labs(x = "",
+       y = "Final severity (%)")
+ggsave("figs/box_metab.png", dpi = 600, height = 4, width = 7)
+```
+
+
+
+## Beta regression
+
+```{r}
+met_sf2 = met_sf%>% 
+  mutate(sev = sev/100,
+         sev = case_when(sev == 0 ~ 0.0001, 
+                         sev > 0 ~ sev))
+lm33 = betareg(sev ~ tratamento, data = met_sf2 )
+summary(lm33)
+```
+
+## Tukey test
+Mean severity comparision
+
+```{r}
+em33 = emmeans(lm33, "tratamento", type  = "response")
+multcomp::cld(em33,Letters = letters, reversed = T)
+```
+
+## Efficacy
+
+
+
+```{r}
+conf33 = confint(lm33)[1:12,]
+metab = data.frame(em33) %>% 
+  select(tratamento) %>%
+  mutate(logC = as.matrix(summary(lm33)$coefficients$mean[,1]),
+         se = as.matrix(summary(lm33)$coefficients$mean[,2]),
+         mean = 1-(exp(as.matrix(summary(lm33)$coefficients$mean[,1])))) %>% 
+  mutate(CL = 1-exp(conf33[,1]),
+         CU = 1-exp(conf33[,2])) %>% 
+      filter(!tratamento %in% c("CHECK", "Water", "Pathogen")) %>% 
+  mutate(meio = "Crude extract")
+metab
+```
+
+# Visualization
+
+```{r}
+conf3 = confint(lm3)[1:12,]
+data.frame(em33) %>% 
+  select(tratamento) %>%
+  mutate(logC = as.matrix(summary(lm33)$coefficients$mean[,1]),
+         se = as.matrix(summary(lm33)$coefficients$mean[,2]),
+         mean = 1-(exp(as.matrix(summary(lm33)$coefficients$mean[,1])))) %>% 
+  mutate(CL = 1-exp(conf33[,1]),
+         CU = 1-exp(conf33[,2])) %>% 
+      filter(!tratamento %in% c("CHECK", "Water", "Pathogen")) %>%  
+  mutate(model = "betareg") %>% 
+  # bind_rows(eff) %>%
+  ggplot(aes(reorder(tratamento,mean) ,mean*100))+
+
+  geom_point(size = 3, position = position_dodge(width = 1))+
+  geom_errorbar(aes(ymin =CU*100, ymax = CL*100), width = 0.0,
+                position = position_dodge(width = 1), size =1)+
+  scale_color_calc()+
+  labs(x = "",
+       y ="Control efficacy (%)",
+       color ="")+
+  theme_bw()+
+  theme(legend.position = "bottom")+
+  coord_flip()
+ggsave("figs/efficacy_met.png", dpi = 600, height = 4, width = 5)
+
+```
+
+
+## Visualizating suspension and metabolites efficacy
+
+```{r}
+susp %>% 
+  bind_rows(metab) %>% 
+  filter(!tratamento %in% c("water", "UCBV_07_17", "UCBV133_7")) %>% #filtra tratamentos indesejados
+  ggplot(aes(reorder(tratamento,mean) ,mean*100, color = meio))+
+
+  geom_point(size = 3, position = position_dodge(width = 1))+
+  geom_errorbar(aes(ymin =CU*100, ymax = CL*100, color = meio), width = 0.0,
+                position = position_dodge(width = 1), size =1)+
+  scale_color_calc()+
+  labs(x = "",
+       y ="Control efficacy (%)",
+       color ="")+
+  theme_bw()+
+  theme(legend.position = "bottom")+
+  coord_flip()
+ggsave("figs/eff_comparison.png", dpi = 600, height = 5, width = 5)
+
+```
+
+

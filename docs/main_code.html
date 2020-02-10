@@ -1,0 +1,816 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+
+
+
+<title>main_code.utf8.md</title>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<script src="site_libs/navigation-1.1/codefolding.js"></script>
+<script src="site_libs/navigation-1.1/sourceembed.js"></script>
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<link href="site_libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet" />
+<script src="site_libs/pagedtable-1.1/js/pagedtable.js"></script>
+<link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+#rmd-source-code {
+  display: none;
+}
+</style>
+
+<link rel="stylesheet" href="my-style.css" type="text/css" />
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+  height: auto;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+</style>
+
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 51px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h2 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h3 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h4 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h5 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h6 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #ffffff;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+
+<!-- code folding -->
+<style type="text/css">
+.code-folding-btn { margin-bottom: 4px; }
+</style>
+<script>
+$(document).ready(function () {
+  window.initializeSourceEmbed("main_code.Rmd");
+});
+</script>
+
+
+
+<script>
+$(document).ready(function ()  {
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_').toLowerCase();
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = false;
+    options.smoothScroll = false;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+  padding-left: 25px;
+  text-indent: 0;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+.tocify-subheader {
+  display: inline;
+}
+.tocify-subheader .tocify-item {
+  font-size: 0.95em;
+}
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row-fluid">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Clonostachis Tomato Early Blight biocontrol</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">
+    <span class="fa fa fa fa-home"></span>
+     
+    About
+  </a>
+</li>
+<li>
+  <a href="main_code.html">
+    <span class="fa fa fa fa-file-code-o"></span>
+     
+    Analysis
+  </a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+  <a href="https://github.com/AlvesKS/clonostachys_biocontrol_early_blight_on_tomato">
+    <span class="fa fa-github-square"></span>
+     
+    source
+  </a>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div class="fluid-row" id="header">
+
+<div class="btn-group pull-right">
+<button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
+<ul class="dropdown-menu" style="min-width: 50px;">
+<li><a id="rmd-download-source" href="#">Download Rmd</a></li>
+</ul>
+</div>
+
+
+
+<h1 class="title toc-ignore">Analysis</h1>
+
+</div>
+
+
+<div id="packages" class="section level1">
+<h1>Packages</h1>
+<pre class="r"><code>library (tidyverse)
+library(gsheet)
+library(ggthemes)
+library(readxl)
+library(agricolae)
+library(cowplot)
+library(emmeans)</code></pre>
+</div>
+<div id="suspension" class="section level1">
+<h1>Suspension</h1>
+<div id="loading-data" class="section level2">
+<h2>Loading data</h2>
+<pre class="r"><code>url= &quot;https://docs.google.com/spreadsheets/d/1N-btyRC_VxrhkS__nMGMGEZ9RBGOc2smMPZ4GS32GuM/edit?usp=sharing&quot;
+
+data=gsheet2tbl(url)</code></pre>
+<p>Histograms of the severity of each treatment</p>
+<pre class="r"><code>data %&gt;% 
+  na.omit(sev) %&gt;% 
+  ggplot(aes(sev))+
+  geom_histogram()+
+  facet_wrap(~tratamento)</code></pre>
+<pre><code>## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
+<p><img src="main_code_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
+<pre class="r"><code>data %&gt;% 
+  ggplot(aes(time_dai,sev, color= tratamento))+
+  geom_point()+
+   facet_wrap(~tratamento)</code></pre>
+<pre><code>## Warning: Removed 1 rows containing missing values (geom_point).</code></pre>
+<p><img src="main_code_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
+<pre class="r"><code>data %&gt;% 
+  ggplot(aes(time_dai,sev, color= tratamento, group = time_dai))+
+  geom_jitter(shape = 1)+
+  geom_boxplot(outlier.colour = NA, fill = NA)+
+  facet_wrap(~tratamento)+
+  theme_minimal_hgrid()+
+  labs(color = &quot;&quot;)+
+  theme(legend.position = &quot;none&quot;)</code></pre>
+<pre><code>## Warning: Removed 1 rows containing non-finite values (stat_boxplot).</code></pre>
+<pre><code>## Warning: Removed 1 rows containing missing values (geom_point).</code></pre>
+<p><img src="main_code_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
+<pre class="r"><code> data %&gt;% 
+  filter(time_dai == max(time_dai)) %&gt;% 
+  ggplot(aes(reorder(tratamento,-sev), sev))+
+  geom_jitter(shape =1, size = 2)+
+  geom_boxplot(fill = NA, size = .7)+
+  
+  theme_minimal_hgrid()+
+  theme(axis.text.x = element_text(angle = 45, hjust = 1,))+
+  labs(x = &quot;&quot;,
+       y = &quot;Final severity (%)&quot;)</code></pre>
+<p><img src="main_code_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
+<pre class="r"><code>ggsave(&quot;figs/box_susp.png&quot;, dpi = 600, height = 4, width = 7)</code></pre>
+<p>Filtering just the severity evaluated at the last day</p>
+<pre class="r"><code>data_sf= data %&gt;% 
+  filter(time_dai == max(time_dai))</code></pre>
+</div>
+</div>
+<div id="beta-regression" class="section level1">
+<h1>Beta regression</h1>
+<pre class="r"><code>library(betareg)</code></pre>
+<pre><code>## Warning: package &#39;betareg&#39; was built under R version 3.5.3</code></pre>
+<pre class="r"><code>data_sf2 = data_sf%&gt;% 
+  mutate(sev = sev/100,
+         sev = case_when(sev == 0 ~ 0.0001, 
+                         sev &gt; 0 ~ sev))
+lm3 = betareg(sev ~ tratamento, data = data_sf2)
+summary(lm3)</code></pre>
+<pre><code>## 
+## Call:
+## betareg(formula = sev ~ tratamento, data = data_sf2)
+## 
+## Standardized weighted residuals 2:
+##     Min      1Q  Median      3Q     Max 
+## -3.4621 -0.4931 -0.1108  0.6751  2.6117 
+## 
+## Coefficients (mean model with logit link):
+##                      Estimate Std. Error z value Pr(&gt;|z|)    
+## (Intercept)           -1.2960     0.1234 -10.506  &lt; 2e-16 ***
+## tratamentoFUNGICIDE   -4.2059     0.4309  -9.760  &lt; 2e-16 ***
+## tratamentoUCBV03      -1.3607     0.2320  -5.864 4.52e-09 ***
+## tratamentoUCBV05      -1.4321     0.2366  -6.052 1.43e-09 ***
+## tratamentoUCBV06      -0.6984     0.1971  -3.543 0.000395 ***
+## tratamentoUCBV07      -1.5450     0.2443  -6.325 2.53e-10 ***
+## tratamentoUCBV07+17   -1.5550     0.2450  -6.348 2.18e-10 ***
+## tratamentoUCBV101     -0.2139     0.1800  -1.189 0.234589    
+## tratamentoUCBV133     -1.3614     0.2321  -5.866 4.46e-09 ***
+## tratamentoUCBV133+07  -1.3660     0.2324  -5.879 4.14e-09 ***
+## tratamentoUCBV17      -0.9572     0.2091  -4.578 4.70e-06 ***
+## tratamentoUCBV38      -1.1432     0.2190  -5.220 1.79e-07 ***
+## tratamentoUCBV97      -0.2951     0.1824  -1.618 0.105615    
+## 
+## Phi coefficients (precision model with identity link):
+##       Estimate Std. Error z value Pr(&gt;|z|)    
+## (phi)    63.00      10.39    6.06 1.36e-09 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1 
+## 
+## Type of estimator: ML (maximum likelihood)
+## Log-likelihood: 175.8 on 14 Df
+## Pseudo R-squared: 0.8596
+## Number of iterations: 74 (BFGS) + 2 (Fisher scoring)</code></pre>
+<div id="tukey-test" class="section level2">
+<h2>Tukey test</h2>
+<p>Mean severity comparision</p>
+<pre class="r"><code>em3 = emmeans(lm3, &quot;tratamento&quot;, type  = &quot;response&quot;)
+multcomp::cld(em3,Letters = letters, reversed = T)</code></pre>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["tratamento"],"name":[1],"type":["fctr"],"align":["left"]},{"label":["emmean"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["SE"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["df"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["asymp.LCL"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["asymp.UCL"],"name":[6],"type":["dbl"],"align":["right"]},{"label":[".group"],"name":[7],"type":["chr"],"align":["left"]}],"data":[{"1":"CHECK","2":"0.214837314","3":"0.020809390","4":"Inf","5":"0.1740516583","6":"0.255622970","7":"a","_rn_":"2"},{"1":"UCBV101","2":"0.180951458","3":"0.019446746","4":"Inf","5":"0.1428365365","6":"0.219066380","7":"ab","_rn_":"7"},{"1":"UCBV97","2":"0.169221423","3":"0.018914462","4":"Inf","5":"0.1321497596","6":"0.206293087","7":"abc","_rn_":"6"},{"1":"UCBV06","2":"0.119790801","3":"0.016237276","4":"Inf","5":"0.0879663243","6":"0.151615277","7":"bcd","_rn_":"4"},{"1":"UCBV17","2":"0.095075822","3":"0.014551134","4":"Inf","5":"0.0665561237","6":"0.123595519","7":"cde","_rn_":"10"},{"1":"UCBV38","2":"0.080227819","3":"0.013379444","4":"Inf","5":"0.0540045914","6":"0.106451047","7":"de","_rn_":"9"},{"1":"UCBV03","2":"0.065578983","3":"0.012067137","4":"Inf","5":"0.0419278284","6":"0.089230137","7":"de","_rn_":"3"},{"1":"UCBV133","2":"0.065536213","3":"0.012063032","4":"Inf","5":"0.0418931059","6":"0.089179321","7":"de","_rn_":"12"},{"1":"UCBV133+07","2":"0.065249740","3":"0.012035486","4":"Inf","5":"0.0416606220","6":"0.088838859","7":"de","_rn_":"11"},{"1":"UCBV05","2":"0.061336375","3":"0.011650953","4":"Inf","5":"0.0385009263","6":"0.084171823","7":"de","_rn_":"5"},{"1":"UCBV07","2":"0.055149432","3":"0.011008868","4":"Inf","5":"0.0335724465","6":"0.076726417","7":"de","_rn_":"13"},{"1":"UCBV07+17","2":"0.054628137","3":"0.010952676","4":"Inf","5":"0.0331612866","6":"0.076094988","7":"e","_rn_":"8"},{"1":"FUNGICIDE","2":"0.004062341","3":"0.001675899","4":"Inf","5":"0.0007776405","6":"0.007347042","7":"f","_rn_":"1"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</div>
+<div id="efficacy" class="section level2">
+<h2>Efficacy</h2>
+<pre class="r"><code>conf3 = confint(lm3)[1:13,]
+susp = data.frame(em3) %&gt;% 
+  select(tratamento) %&gt;%
+  mutate(logC = as.matrix(summary(lm3)$coefficients$mean[,1]),
+         se = as.matrix(summary(lm3)$coefficients$mean[,2]),
+         mean = 1-(exp(as.matrix(summary(lm3)$coefficients$mean[,1])))) %&gt;% 
+  mutate(CL = 1-exp(conf3[,1]),
+         CU = 1-exp(conf3[,2])) %&gt;% 
+    filter(!tratamento %in% c(&quot;CHECK&quot;)) %&gt;% 
+  mutate(meio =  &quot;Suspension&quot;)
+susp</code></pre>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["tratamento"],"name":[1],"type":["fctr"],"align":["left"]},{"label":["logC"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["se"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["mean"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["CL"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["CU"],"name":[6],"type":["dbl"],"align":["right"]},{"label":["meio"],"name":[7],"type":["chr"],"align":["left"]}],"data":[{"1":"FUNGICIDE","2":"-4.2059153","3":"0.4309165","4":"0.9850929","5":"0.9935938","6":"0.9653111","7":"Suspension"},{"1":"UCBV03","2":"-1.3606620","3":"0.2320316","4":"0.7435091","5":"0.8372330","6":"0.5958173","7":"Suspension"},{"1":"UCBV05","2":"-1.4320743","3":"0.2366429","4":"0.7611870","5":"0.8498148","6":"0.6202578","7":"Suspension"},{"1":"UCBV06","2":"-0.6984028","3":"0.1971048","4":"0.5026209","5":"0.6620039","6":"0.2680804","7":"Suspension"},{"1":"UCBV07","2":"-1.5449705","3":"0.2442632","4":"0.7866818","5":"0.8678368","6":"0.6556936","7":"Suspension"},{"1":"UCBV07+17","2":"-1.5550194","3":"0.2449608","4":"0.7888147","5":"0.8693370","6":"0.6586698","7":"Suspension"},{"1":"UCBV101","2":"-0.2139047","3":"0.1799604","4":"0.1925746","5":"0.4325602","6":"-0.1489072","7":"Suspension"},{"1":"UCBV133","2":"-1.3613601","3":"0.2320759","4":"0.7436881","5":"0.8373607","6":"0.5960644","7":"Suspension"},{"1":"UCBV133+07","2":"-1.3660474","3":"0.2323736","4":"0.7448867","5":"0.8382157","6":"0.5977186","7":"Suspension"},{"1":"UCBV17","2":"-0.9571666","3":"0.2090832","4":"0.6160207","5":"0.7451199","6":"0.4215314","7":"Suspension"},{"1":"UCBV38","2":"-1.1432458","3":"0.2190093","4":"0.6812174","5":"0.7924735","6":"0.5103162","7":"Suspension"},{"1":"UCBV97","2":"-0.2951454","3":"0.1823887","4":"0.2555766","5":"0.4793205","6":"-0.0643134","7":"Suspension"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</div>
+</div>
+<div id="efficacy-visualization" class="section level1">
+<h1>Efficacy visualization</h1>
+<pre class="r"><code>conf3 = confint(lm3)[1:13,]
+data.frame(em3) %&gt;% 
+  select(tratamento) %&gt;%
+  mutate(logC = as.matrix(summary(lm3)$coefficients$mean[,1]),
+         se = as.matrix(summary(lm3)$coefficients$mean[,2]),
+         mean = 1-(exp(as.matrix(summary(lm3)$coefficients$mean[,1])))) %&gt;% 
+  mutate(CL = 1-exp(conf3[,1]),
+         CU = 1-exp(conf3[,2])) %&gt;% 
+    filter(!tratamento %in% c(&quot;CHECK&quot;)) %&gt;% 
+  # mutate(model = &quot;betareg&quot;) %&gt;% 
+  # bind_rows(eff) %&gt;%
+  ggplot(aes(reorder(tratamento,mean) ,mean*100))+
+
+  geom_point(size = 3, position = position_dodge(width = 1))+
+  geom_errorbar(aes(ymin =CU*100, ymax = CL*100 ), width = 0.0,
+                position = position_dodge(width = 1), size =1)+
+  scale_color_calc()+
+  labs(x = &quot;&quot;,
+       y =&quot;Control efficacy (%)&quot;,
+       color =&quot;&quot;)+
+  theme_bw()+
+  theme(legend.position = &quot;bottom&quot;)+
+  coord_flip()</code></pre>
+<p><img src="main_code_files/figure-html/unnamed-chunk-12-1.png" width="672" /></p>
+<pre class="r"><code>ggsave(&quot;figs/efficacy_suspen.png&quot;, dpi = 600, height = 4, width = 5)</code></pre>
+</div>
+<div id="metabolites" class="section level1">
+<h1>Metabolites</h1>
+<pre class="r"><code>met = gsheet2tbl(&quot;https://docs.google.com/spreadsheets/d/10-nluFRhVzPLQPSczDEr9szKciWXNxcnart3ZAfii7M/edit?usp=sharing&quot;)
+met</code></pre>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["tratamento"],"name":[1],"type":["chr"],"align":["left"]},{"label":["rep"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["time_dai"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["sev"],"name":[4],"type":["dbl"],"align":["right"]}],"data":[{"1":"UCBV03","2":"1","3":"5","4":"0.0"},{"1":"UCBV03","2":"2","3":"5","4":"0.1"},{"1":"UCBV03","2":"3","3":"5","4":"0.1"},{"1":"UCBV03","2":"4","3":"5","4":"0.5"},{"1":"UCBV03","2":"5","3":"5","4":"1.5"},{"1":"UCBV03","2":"6","3":"5","4":"0.0"},{"1":"UCBV05","2":"1","3":"5","4":"0.0"},{"1":"UCBV05","2":"2","3":"5","4":"0.2"},{"1":"UCBV05","2":"3","3":"5","4":"0.1"},{"1":"UCBV05","2":"4","3":"5","4":"0.1"},{"1":"UCBV05","2":"5","3":"5","4":"0.5"},{"1":"UCBV05","2":"6","3":"5","4":"0.1"},{"1":"UCBV06","2":"1","3":"5","4":"0.1"},{"1":"UCBV06","2":"2","3":"5","4":"0.3"},{"1":"UCBV06","2":"3","3":"5","4":"1.5"},{"1":"UCBV06","2":"4","3":"5","4":"0.0"},{"1":"UCBV06","2":"5","3":"5","4":"0.2"},{"1":"UCBV06","2":"6","3":"5","4":"0.1"},{"1":"UCBV07","2":"1","3":"5","4":"0.1"},{"1":"UCBV07","2":"2","3":"5","4":"0.1"},{"1":"UCBV07","2":"3","3":"5","4":"0.1"},{"1":"UCBV07","2":"4","3":"5","4":"0.2"},{"1":"UCBV07","2":"5","3":"5","4":"0.0"},{"1":"UCBV07","2":"6","3":"5","4":"0.1"},{"1":"UCBV17","2":"1","3":"5","4":"0.1"},{"1":"UCBV17","2":"2","3":"5","4":"0.1"},{"1":"UCBV17","2":"3","3":"5","4":"0.1"},{"1":"UCBV17","2":"4","3":"5","4":"0.1"},{"1":"UCBV17","2":"5","3":"5","4":"1.0"},{"1":"UCBV17","2":"6","3":"5","4":"0.1"},{"1":"UCBV38","2":"1","3":"5","4":"0.0"},{"1":"UCBV38","2":"2","3":"5","4":"0.0"},{"1":"UCBV38","2":"3","3":"5","4":"1.0"},{"1":"UCBV38","2":"4","3":"5","4":"0.2"},{"1":"UCBV38","2":"5","3":"5","4":"0.5"},{"1":"UCBV38","2":"6","3":"5","4":"0.5"},{"1":"UCBV97","2":"1","3":"5","4":"0.2"},{"1":"UCBV97","2":"2","3":"5","4":"0.1"},{"1":"UCBV97","2":"3","3":"5","4":"0.1"},{"1":"UCBV97","2":"4","3":"5","4":"1.5"},{"1":"UCBV97","2":"5","3":"5","4":"0.0"},{"1":"UCBV97","2":"6","3":"5","4":"0.2"},{"1":"UCBV101","2":"1","3":"5","4":"NA"},{"1":"UCBV101","2":"2","3":"5","4":"1.5"},{"1":"UCBV101","2":"3","3":"5","4":"0.3"},{"1":"UCBV101","2":"4","3":"5","4":"2.5"},{"1":"UCBV101","2":"5","3":"5","4":"2.0"},{"1":"UCBV101","2":"6","3":"5","4":"0.2"},{"1":"UCBV133","2":"1","3":"5","4":"0.0"},{"1":"UCBV133","2":"2","3":"5","4":"0.2"},{"1":"UCBV133","2":"3","3":"5","4":"0.5"},{"1":"UCBV133","2":"4","3":"5","4":"1.5"},{"1":"UCBV133","2":"5","3":"5","4":"0.1"},{"1":"UCBV133","2":"6","3":"5","4":"2.0"},{"1":"UCBV05_alt","2":"1","3":"5","4":"2.0"},{"1":"UCBV05_alt","2":"2","3":"5","4":"0.2"},{"1":"UCBV05_alt","2":"3","3":"5","4":"0.1"},{"1":"UCBV05_alt","2":"4","3":"5","4":"0.2"},{"1":"UCBV05_alt","2":"5","3":"5","4":"0.8"},{"1":"UCBV05_alt","2":"6","3":"5","4":"0.6"},{"1":"UCBV06_alt","2":"1","3":"5","4":"0.2"},{"1":"UCBV06_alt","2":"2","3":"5","4":"0.5"},{"1":"UCBV06_alt","2":"3","3":"5","4":"0.3"},{"1":"UCBV06_alt","2":"4","3":"5","4":"0.2"},{"1":"UCBV06_alt","2":"5","3":"5","4":"0.2"},{"1":"UCBV06_alt","2":"6","3":"5","4":"0.2"},{"1":"UCBV07_alt","2":"1","3":"5","4":"0.1"},{"1":"UCBV07_alt","2":"2","3":"5","4":"0.2"},{"1":"UCBV07_alt","2":"3","3":"5","4":"0.2"},{"1":"UCBV07_alt","2":"4","3":"5","4":"0.1"},{"1":"UCBV07_alt","2":"5","3":"5","4":"1.0"},{"1":"UCBV07_alt","2":"6","3":"5","4":"0.1"},{"1":"UCBV17_alt","2":"1","3":"5","4":"0.2"},{"1":"UCBV17_alt","2":"2","3":"5","4":"0.1"},{"1":"UCBV17_alt","2":"3","3":"5","4":"0.1"},{"1":"UCBV17_alt","2":"4","3":"5","4":"1.5"},{"1":"UCBV17_alt","2":"5","3":"5","4":"0.5"},{"1":"UCBV17_alt","2":"6","3":"5","4":"2.5"},{"1":"UCBV38_alt","2":"1","3":"5","4":"0.5"},{"1":"UCBV38_alt","2":"2","3":"5","4":"0.3"},{"1":"UCBV38_alt","2":"3","3":"5","4":"0.0"},{"1":"UCBV38_alt","2":"4","3":"5","4":"0.1"},{"1":"UCBV38_alt","2":"5","3":"5","4":"0.5"},{"1":"UCBV38_alt","2":"6","3":"5","4":"1.0"},{"1":"UCBV97_alt","2":"1","3":"5","4":"0.5"},{"1":"UCBV97_alt","2":"2","3":"5","4":"0.1"},{"1":"UCBV97_alt","2":"3","3":"5","4":"1.0"},{"1":"UCBV97_alt","2":"4","3":"5","4":"0.4"},{"1":"UCBV97_alt","2":"5","3":"5","4":"0.0"},{"1":"UCBV97_alt","2":"6","3":"5","4":"0.5"},{"1":"UCBV101_alt","2":"1","3":"5","4":"2.0"},{"1":"UCBV101_alt","2":"2","3":"5","4":"1.5"},{"1":"UCBV101_alt","2":"3","3":"5","4":"2.0"},{"1":"UCBV101_alt","2":"4","3":"5","4":"1.0"},{"1":"UCBV101_alt","2":"5","3":"5","4":"0.2"},{"1":"UCBV101_alt","2":"6","3":"5","4":"0.5"},{"1":"UCBV133_alt","2":"1","3":"5","4":"0.1"},{"1":"UCBV133_alt","2":"2","3":"5","4":"0.1"},{"1":"UCBV133_alt","2":"3","3":"5","4":"0.5"},{"1":"UCBV133_alt","2":"4","3":"5","4":"0.5"},{"1":"UCBV133_alt","2":"5","3":"5","4":"1.0"},{"1":"UCBV133_alt","2":"6","3":"5","4":"0.3"},{"1":"CHECK","2":"1","3":"5","4":"1.0"},{"1":"CHECK","2":"2","3":"5","4":"1.0"},{"1":"CHECK","2":"3","3":"5","4":"1.0"},{"1":"CHECK","2":"4","3":"5","4":"1.0"},{"1":"CHECK","2":"5","3":"5","4":"1.5"},{"1":"CHECK","2":"6","3":"5","4":"1.0"},{"1":"FUNGICIDE","2":"1","3":"5","4":"0.5"},{"1":"FUNGICIDE","2":"2","3":"5","4":"0.0"},{"1":"FUNGICIDE","2":"3","3":"5","4":"0.0"},{"1":"FUNGICIDE","2":"4","3":"5","4":"0.0"},{"1":"FUNGICIDE","2":"5","3":"5","4":"0.0"},{"1":"FUNGICIDE","2":"6","3":"5","4":"0.0"},{"1":"Pathogen","2":"1","3":"5","4":"0.5"},{"1":"Pathogen","2":"2","3":"5","4":"1.0"},{"1":"Pathogen","2":"3","3":"5","4":"4.0"},{"1":"Pathogen","2":"4","3":"5","4":"0.8"},{"1":"Pathogen","2":"5","3":"5","4":"2.0"},{"1":"Pathogen","2":"6","3":"5","4":"2.0"},{"1":"Water","2":"1","3":"5","4":"1.5"},{"1":"Water","2":"2","3":"5","4":"0.5"},{"1":"Water","2":"3","3":"5","4":"2.5"},{"1":"Water","2":"4","3":"5","4":"1.5"},{"1":"Water","2":"5","3":"5","4":"0.5"},{"1":"Water","2":"6","3":"5","4":"1.5"},{"1":"UCBV03","2":"1","3":"7","4":"0.1"},{"1":"UCBV03","2":"2","3":"7","4":"0.2"},{"1":"UCBV03","2":"3","3":"7","4":"1.0"},{"1":"UCBV03","2":"4","3":"7","4":"1.0"},{"1":"UCBV03","2":"5","3":"7","4":"0.8"},{"1":"UCBV03","2":"6","3":"7","4":"0.8"},{"1":"UCBV05","2":"1","3":"7","4":"0.5"},{"1":"UCBV05","2":"2","3":"7","4":"0.8"},{"1":"UCBV05","2":"3","3":"7","4":"0.8"},{"1":"UCBV05","2":"4","3":"7","4":"0.3"},{"1":"UCBV05","2":"5","3":"7","4":"2.0"},{"1":"UCBV05","2":"6","3":"7","4":"0.3"},{"1":"UCBV06","2":"1","3":"7","4":"0.3"},{"1":"UCBV06","2":"2","3":"7","4":"0.5"},{"1":"UCBV06","2":"3","3":"7","4":"3.0"},{"1":"UCBV06","2":"4","3":"7","4":"0.2"},{"1":"UCBV06","2":"5","3":"7","4":"1.8"},{"1":"UCBV06","2":"6","3":"7","4":"0.5"},{"1":"UCBV07","2":"1","3":"7","4":"1.5"},{"1":"UCBV07","2":"2","3":"7","4":"0.4"},{"1":"UCBV07","2":"3","3":"7","4":"0.5"},{"1":"UCBV07","2":"4","3":"7","4":"0.5"},{"1":"UCBV07","2":"5","3":"7","4":"0.5"},{"1":"UCBV07","2":"6","3":"7","4":"0.5"},{"1":"UCBV17","2":"1","3":"7","4":"3.0"},{"1":"UCBV17","2":"2","3":"7","4":"0.1"},{"1":"UCBV17","2":"3","3":"7","4":"0.3"},{"1":"UCBV17","2":"4","3":"7","4":"0.6"},{"1":"UCBV17","2":"5","3":"7","4":"0.3"},{"1":"UCBV17","2":"6","3":"7","4":"0.8"},{"1":"UCBV38","2":"1","3":"7","4":"0.2"},{"1":"UCBV38","2":"2","3":"7","4":"0.4"},{"1":"UCBV38","2":"3","3":"7","4":"2.0"},{"1":"UCBV38","2":"4","3":"7","4":"1.0"},{"1":"UCBV38","2":"5","3":"7","4":"0.6"},{"1":"UCBV38","2":"6","3":"7","4":"2.0"},{"1":"UCBV97","2":"1","3":"7","4":"2.0"},{"1":"UCBV97","2":"2","3":"7","4":"0.6"},{"1":"UCBV97","2":"3","3":"7","4":"0.8"},{"1":"UCBV97","2":"4","3":"7","4":"3.0"},{"1":"UCBV97","2":"5","3":"7","4":"0.4"},{"1":"UCBV97","2":"6","3":"7","4":"0.8"},{"1":"UCBV101","2":"1","3":"7","4":"0.8"},{"1":"UCBV101","2":"2","3":"7","4":"2.5"},{"1":"UCBV101","2":"3","3":"7","4":"2.8"},{"1":"UCBV101","2":"4","3":"7","4":"16.0"},{"1":"UCBV101","2":"5","3":"7","4":"5.0"},{"1":"UCBV101","2":"6","3":"7","4":"2.0"},{"1":"UCBV133","2":"1","3":"7","4":"0.3"},{"1":"UCBV133","2":"2","3":"7","4":"1.0"},{"1":"UCBV133","2":"3","3":"7","4":"0.3"},{"1":"UCBV133","2":"4","3":"7","4":"2.5"},{"1":"UCBV133","2":"5","3":"7","4":"1.5"},{"1":"UCBV133","2":"6","3":"7","4":"0.5"},{"1":"UCBV05_alt","2":"1","3":"5","4":"1.0"},{"1":"UCBV05_alt","2":"2","3":"5","4":"0.5"},{"1":"UCBV05_alt","2":"3","3":"5","4":"0.8"},{"1":"UCBV05_alt","2":"4","3":"5","4":"0.3"},{"1":"UCBV05_alt","2":"5","3":"5","4":"2.5"},{"1":"UCBV05_alt","2":"6","3":"5","4":"1.0"},{"1":"UCBV06_alt","2":"1","3":"5","4":"1.0"},{"1":"UCBV06_alt","2":"2","3":"5","4":"0.2"},{"1":"UCBV06_alt","2":"3","3":"5","4":"0.8"},{"1":"UCBV06_alt","2":"4","3":"5","4":"1.5"},{"1":"UCBV06_alt","2":"5","3":"5","4":"0.6"},{"1":"UCBV06_alt","2":"6","3":"5","4":"1.0"},{"1":"UCBV07_alt","2":"1","3":"5","4":"0.8"},{"1":"UCBV07_alt","2":"2","3":"5","4":"1.0"},{"1":"UCBV07_alt","2":"3","3":"5","4":"1.5"},{"1":"UCBV07_alt","2":"4","3":"5","4":"1.0"},{"1":"UCBV07_alt","2":"5","3":"5","4":"4.0"},{"1":"UCBV07_alt","2":"6","3":"5","4":"0.8"},{"1":"UCBV17_alt","2":"1","3":"5","4":"0.6"},{"1":"UCBV17_alt","2":"2","3":"5","4":"1.5"},{"1":"UCBV17_alt","2":"3","3":"5","4":"0.8"},{"1":"UCBV17_alt","2":"4","3":"5","4":"0.0"},{"1":"UCBV17_alt","2":"5","3":"5","4":"2.0"},{"1":"UCBV17_alt","2":"6","3":"5","4":"6.0"},{"1":"UCBV38_alt","2":"1","3":"5","4":"2.5"},{"1":"UCBV38_alt","2":"2","3":"5","4":"0.8"},{"1":"UCBV38_alt","2":"3","3":"5","4":"0.5"},{"1":"UCBV38_alt","2":"4","3":"5","4":"0.2"},{"1":"UCBV38_alt","2":"5","3":"5","4":"0.8"},{"1":"UCBV38_alt","2":"6","3":"5","4":"0.5"},{"1":"UCBV97_alt","2":"1","3":"5","4":"1.5"},{"1":"UCBV97_alt","2":"2","3":"5","4":"0.3"},{"1":"UCBV97_alt","2":"3","3":"5","4":"2.5"},{"1":"UCBV97_alt","2":"4","3":"5","4":"1.0"},{"1":"UCBV97_alt","2":"5","3":"5","4":"0.8"},{"1":"UCBV97_alt","2":"6","3":"5","4":"2.0"},{"1":"UCBV101_alt","2":"1","3":"5","4":"8.5"},{"1":"UCBV101_alt","2":"2","3":"5","4":"2.0"},{"1":"UCBV101_alt","2":"3","3":"5","4":"6.0"},{"1":"UCBV101_alt","2":"4","3":"5","4":"3.5"},{"1":"UCBV101_alt","2":"5","3":"5","4":"0.8"},{"1":"UCBV101_alt","2":"6","3":"5","4":"1.5"},{"1":"UCBV133_alt","2":"1","3":"5","4":"0.3"},{"1":"UCBV133_alt","2":"2","3":"5","4":"0.5"},{"1":"UCBV133_alt","2":"3","3":"5","4":"0.4"},{"1":"UCBV133_alt","2":"4","3":"5","4":"1.0"},{"1":"UCBV133_alt","2":"5","3":"5","4":"0.5"},{"1":"UCBV133_alt","2":"6","3":"5","4":"1.2"},{"1":"CHECK","2":"1","3":"7","4":"4.0"},{"1":"CHECK","2":"2","3":"7","4":"0.8"},{"1":"CHECK","2":"3","3":"7","4":"1.0"},{"1":"CHECK","2":"4","3":"7","4":"2.0"},{"1":"CHECK","2":"5","3":"7","4":"2.0"},{"1":"CHECK","2":"6","3":"7","4":"2.0"},{"1":"FUNGICIDE","2":"1","3":"7","4":"0.5"},{"1":"FUNGICIDE","2":"2","3":"7","4":"0.0"},{"1":"FUNGICIDE","2":"3","3":"7","4":"0.0"},{"1":"FUNGICIDE","2":"4","3":"7","4":"0.0"},{"1":"FUNGICIDE","2":"5","3":"7","4":"0.2"},{"1":"FUNGICIDE","2":"6","3":"7","4":"0.0"},{"1":"Pathogen","2":"1","3":"7","4":"2.5"},{"1":"Pathogen","2":"2","3":"7","4":"3.0"},{"1":"Pathogen","2":"3","3":"7","4":"12.0"},{"1":"Pathogen","2":"4","3":"7","4":"2.5"},{"1":"Pathogen","2":"5","3":"7","4":"8.5"},{"1":"Pathogen","2":"6","3":"7","4":"3.0"},{"1":"Water","2":"1","3":"7","4":"8.0"},{"1":"Water","2":"2","3":"7","4":"0.8"},{"1":"Water","2":"3","3":"7","4":"8.0"},{"1":"Water","2":"4","3":"7","4":"5.0"},{"1":"Water","2":"5","3":"7","4":"3.0"},{"1":"Water","2":"6","3":"7","4":"4.0"},{"1":"UCBV03","2":"1","3":"9","4":"1.0"},{"1":"UCBV03","2":"2","3":"9","4":"2.0"},{"1":"UCBV03","2":"3","3":"9","4":"2.0"},{"1":"UCBV03","2":"4","3":"9","4":"6.5"},{"1":"UCBV03","2":"5","3":"9","4":"2.5"},{"1":"UCBV03","2":"6","3":"9","4":"1.8"},{"1":"UCBV05","2":"1","3":"9","4":"1.0"},{"1":"UCBV05","2":"2","3":"9","4":"2.0"},{"1":"UCBV05","2":"3","3":"9","4":"0.8"},{"1":"UCBV05","2":"4","3":"9","4":"0.8"},{"1":"UCBV05","2":"5","3":"9","4":"4.5"},{"1":"UCBV05","2":"6","3":"9","4":"3.5"},{"1":"UCBV06","2":"1","3":"9","4":"0.5"},{"1":"UCBV06","2":"2","3":"9","4":"3.5"},{"1":"UCBV06","2":"3","3":"9","4":"5.0"},{"1":"UCBV06","2":"4","3":"9","4":"1.0"},{"1":"UCBV06","2":"5","3":"9","4":"8.0"},{"1":"UCBV06","2":"6","3":"9","4":"2.5"},{"1":"UCBV07","2":"1","3":"9","4":"1.0"},{"1":"UCBV07","2":"2","3":"9","4":"2.5"},{"1":"UCBV07","2":"3","3":"9","4":"2.5"},{"1":"UCBV07","2":"4","3":"9","4":"1.5"},{"1":"UCBV07","2":"5","3":"9","4":"1.5"},{"1":"UCBV07","2":"6","3":"9","4":"3.5"},{"1":"UCBV17","2":"1","3":"9","4":"1.5"},{"1":"UCBV17","2":"2","3":"9","4":"0.8"},{"1":"UCBV17","2":"3","3":"9","4":"0.6"},{"1":"UCBV17","2":"4","3":"9","4":"2.0"},{"1":"UCBV17","2":"5","3":"9","4":"0.8"},{"1":"UCBV17","2":"6","3":"9","4":"2.0"},{"1":"UCBV38","2":"1","3":"9","4":"0.9"},{"1":"UCBV38","2":"2","3":"9","4":"0.8"},{"1":"UCBV38","2":"3","3":"9","4":"5.0"},{"1":"UCBV38","2":"4","3":"9","4":"3.0"},{"1":"UCBV38","2":"5","3":"9","4":"3.0"},{"1":"UCBV38","2":"6","3":"9","4":"8.0"},{"1":"UCBV97","2":"1","3":"9","4":"1.5"},{"1":"UCBV97","2":"2","3":"9","4":"2.0"},{"1":"UCBV97","2":"3","3":"9","4":"1.0"},{"1":"UCBV97","2":"4","3":"9","4":"12.0"},{"1":"UCBV97","2":"5","3":"9","4":"0.8"},{"1":"UCBV97","2":"6","3":"9","4":"2.5"},{"1":"UCBV101","2":"1","3":"9","4":"8.0"},{"1":"UCBV101","2":"2","3":"9","4":"7.0"},{"1":"UCBV101","2":"3","3":"9","4":"4.0"},{"1":"UCBV101","2":"4","3":"9","4":"18.0"},{"1":"UCBV101","2":"5","3":"9","4":"8.0"},{"1":"UCBV101","2":"6","3":"9","4":"6.0"},{"1":"UCBV133","2":"1","3":"9","4":"3.0"},{"1":"UCBV133","2":"2","3":"9","4":"7.0"},{"1":"UCBV133","2":"3","3":"9","4":"1.3"},{"1":"UCBV133","2":"4","3":"9","4":"3.0"},{"1":"UCBV133","2":"5","3":"9","4":"2.5"},{"1":"UCBV133","2":"6","3":"9","4":"3.0"},{"1":"CHECK","2":"1","3":"9","4":"12.0"},{"1":"UCBV05_alt","2":"1","3":"9","4":"2.5"},{"1":"UCBV05_alt","2":"2","3":"9","4":"3.0"},{"1":"UCBV05_alt","2":"3","3":"9","4":"2.0"},{"1":"UCBV05_alt","2":"4","3":"9","4":"2.0"},{"1":"UCBV05_alt","2":"5","3":"9","4":"3.0"},{"1":"UCBV05_alt","2":"6","3":"9","4":"7.0"},{"1":"UCBV06_alt","2":"1","3":"9","4":"0.8"},{"1":"UCBV06_alt","2":"2","3":"9","4":"1.5"},{"1":"UCBV06_alt","2":"3","3":"9","4":"2.5"},{"1":"UCBV06_alt","2":"4","3":"9","4":"4.5"},{"1":"UCBV06_alt","2":"5","3":"9","4":"3.0"},{"1":"UCBV06_alt","2":"6","3":"9","4":"3.0"},{"1":"UCBV07_alt","2":"1","3":"9","4":"1.5"},{"1":"UCBV07_alt","2":"2","3":"9","4":"2.5"},{"1":"UCBV07_alt","2":"3","3":"9","4":"4.0"},{"1":"UCBV07_alt","2":"4","3":"9","4":"4.5"},{"1":"UCBV07_alt","2":"5","3":"9","4":"10.0"},{"1":"UCBV07_alt","2":"6","3":"9","4":"2.5"},{"1":"UCBV17_alt","2":"1","3":"9","4":"1.0"},{"1":"UCBV17_alt","2":"2","3":"9","4":"6.0"},{"1":"UCBV17_alt","2":"3","3":"9","4":"4.0"},{"1":"UCBV17_alt","2":"4","3":"9","4":"1.5"},{"1":"UCBV17_alt","2":"5","3":"9","4":"2.0"},{"1":"UCBV17_alt","2":"6","3":"9","4":"12.0"},{"1":"UCBV38_alt","2":"1","3":"9","4":"8.0"},{"1":"UCBV38_alt","2":"2","3":"9","4":"5.0"},{"1":"UCBV38_alt","2":"3","3":"9","4":"4.0"},{"1":"UCBV38_alt","2":"4","3":"9","4":"4.0"},{"1":"UCBV38_alt","2":"5","3":"9","4":"5.5"},{"1":"UCBV38_alt","2":"6","3":"9","4":"0.6"},{"1":"UCBV97_alt","2":"1","3":"9","4":"2.0"},{"1":"UCBV97_alt","2":"2","3":"9","4":"1.5"},{"1":"UCBV97_alt","2":"3","3":"9","4":"8.5"},{"1":"UCBV97_alt","2":"4","3":"9","4":"8.5"},{"1":"UCBV97_alt","2":"5","3":"9","4":"1.5"},{"1":"UCBV97_alt","2":"6","3":"9","4":"3.5"},{"1":"UCBV101_alt","2":"1","3":"9","4":"16.0"},{"1":"UCBV101_alt","2":"2","3":"9","4":"4.5"},{"1":"UCBV101_alt","2":"3","3":"9","4":"12.0"},{"1":"UCBV101_alt","2":"4","3":"9","4":"10.0"},{"1":"UCBV101_alt","2":"5","3":"9","4":"8.5"},{"1":"UCBV101_alt","2":"6","3":"9","4":"2.0"},{"1":"UCBV133_alt","2":"1","3":"9","4":"1.8"},{"1":"UCBV133_alt","2":"2","3":"9","4":"1.0"},{"1":"UCBV133_alt","2":"3","3":"9","4":"0.3"},{"1":"UCBV133_alt","2":"4","3":"9","4":"2.0"},{"1":"UCBV133_alt","2":"5","3":"9","4":"2.5"},{"1":"UCBV133_alt","2":"6","3":"5","4":"6.0"},{"1":"CHECK","2":"2","3":"9","4":"4.0"},{"1":"CHECK","2":"3","3":"9","4":"5.0"},{"1":"CHECK","2":"4","3":"9","4":"7.0"},{"1":"CHECK","2":"5","3":"9","4":"4.0"},{"1":"CHECK","2":"6","3":"9","4":"12.0"},{"1":"FUNGICIDE","2":"1","3":"9","4":"0.8"},{"1":"FUNGICIDE","2":"2","3":"9","4":"0.3"},{"1":"FUNGICIDE","2":"3","3":"9","4":"0.0"},{"1":"FUNGICIDE","2":"4","3":"9","4":"0.0"},{"1":"FUNGICIDE","2":"5","3":"9","4":"0.5"},{"1":"FUNGICIDE","2":"6","3":"9","4":"0.0"},{"1":"Pathogen","2":"1","3":"9","4":"10.0"},{"1":"Pathogen","2":"2","3":"9","4":"8.0"},{"1":"Pathogen","2":"3","3":"9","4":"22.0"},{"1":"Pathogen","2":"4","3":"9","4":"8.0"},{"1":"Pathogen","2":"5","3":"9","4":"12.0"},{"1":"Pathogen","2":"6","3":"9","4":"5.0"},{"1":"Water","2":"1","3":"9","4":"12.0"},{"1":"Water","2":"2","3":"9","4":"6.0"},{"1":"Water","2":"3","3":"9","4":"18.0"},{"1":"Water","2":"4","3":"9","4":"9.0"},{"1":"Water","2":"5","3":"9","4":"3.0"},{"1":"Water","2":"6","3":"9","4":"18.0"},{"1":"UCBV03","2":"1","3":"11","4":"3.0"},{"1":"UCBV03","2":"2","3":"11","4":"3.0"},{"1":"UCBV03","2":"3","3":"11","4":"4.5"},{"1":"UCBV03","2":"4","3":"11","4":"4.0"},{"1":"UCBV03","2":"5","3":"11","4":"4.5"},{"1":"UCBV03","2":"6","3":"11","4":"4.5"},{"1":"UCBV05","2":"1","3":"11","4":"3.0"},{"1":"UCBV05","2":"2","3":"11","4":"6.0"},{"1":"UCBV05","2":"3","3":"11","4":"1.0"},{"1":"UCBV05","2":"4","3":"11","4":"1.5"},{"1":"UCBV05","2":"5","3":"11","4":"6.0"},{"1":"UCBV05","2":"6","3":"11","4":"4.0"},{"1":"UCBV06","2":"1","3":"11","4":"1.5"},{"1":"UCBV06","2":"2","3":"11","4":"4.0"},{"1":"UCBV06","2":"3","3":"11","4":"10.0"},{"1":"UCBV06","2":"4","3":"11","4":"4.5"},{"1":"UCBV06","2":"5","3":"11","4":"12.0"},{"1":"UCBV06","2":"6","3":"11","4":"8.0"},{"1":"UCBV07","2":"1","3":"11","4":"1.5"},{"1":"UCBV07","2":"2","3":"11","4":"4.0"},{"1":"UCBV07","2":"3","3":"11","4":"1.5"},{"1":"UCBV07","2":"4","3":"11","4":"1.5"},{"1":"UCBV07","2":"5","3":"11","4":"4.0"},{"1":"UCBV07","2":"6","3":"11","4":"4.5"},{"1":"UCBV17","2":"1","3":"11","4":"0.7"},{"1":"UCBV17","2":"2","3":"11","4":"2.0"},{"1":"UCBV17","2":"3","3":"11","4":"2.5"},{"1":"UCBV17","2":"4","3":"11","4":"3.0"},{"1":"UCBV17","2":"5","3":"11","4":"2.5"},{"1":"UCBV17","2":"6","3":"11","4":"5.0"},{"1":"UCBV38","2":"1","3":"11","4":"2.5"},{"1":"UCBV38","2":"2","3":"11","4":"4.5"},{"1":"UCBV38","2":"3","3":"11","4":"5.0"},{"1":"UCBV38","2":"4","3":"11","4":"8.0"},{"1":"UCBV38","2":"5","3":"11","4":"3.5"},{"1":"UCBV38","2":"6","3":"11","4":"8.0"},{"1":"UCBV97","2":"1","3":"11","4":"8.0"},{"1":"UCBV97","2":"2","3":"11","4":"5.0"},{"1":"UCBV97","2":"3","3":"11","4":"4.0"},{"1":"UCBV97","2":"4","3":"11","4":"14.0"},{"1":"UCBV97","2":"5","3":"11","4":"3.5"},{"1":"UCBV97","2":"6","3":"11","4":"6.0"},{"1":"UCBV101","2":"1","3":"11","4":"14.0"},{"1":"UCBV101","2":"2","3":"11","4":"10.0"},{"1":"UCBV101","2":"3","3":"11","4":"8.0"},{"1":"UCBV101","2":"4","3":"11","4":"25.0"},{"1":"UCBV101","2":"5","3":"11","4":"14.0"},{"1":"UCBV101","2":"6","3":"11","4":"12.0"},{"1":"UCBV133","2":"1","3":"11","4":"3.5"},{"1":"UCBV133","2":"2","3":"11","4":"4.0"},{"1":"UCBV133","2":"3","3":"11","4":"1.0"},{"1":"UCBV133","2":"4","3":"11","4":"4.5"},{"1":"UCBV133","2":"5","3":"11","4":"1.5"},{"1":"UCBV133","2":"6","3":"11","4":"3.0"},{"1":"UCBV05_alt","2":"1","3":"11","4":"3.5"},{"1":"UCBV05_alt","2":"2","3":"11","4":"3.5"},{"1":"UCBV05_alt","2":"3","3":"11","4":"6.0"},{"1":"UCBV05_alt","2":"4","3":"11","4":"4.0"},{"1":"UCBV05_alt","2":"5","3":"11","4":"6.0"},{"1":"UCBV05_alt","2":"6","3":"11","4":"3.5"},{"1":"UCBV06_alt","2":"1","3":"11","4":"3.5"},{"1":"UCBV06_alt","2":"2","3":"11","4":"5.0"},{"1":"UCBV06_alt","2":"3","3":"11","4":"3.5"},{"1":"UCBV06_alt","2":"4","3":"11","4":"8.5"},{"1":"UCBV06_alt","2":"5","3":"11","4":"8.0"},{"1":"UCBV06_alt","2":"6","3":"11","4":"2.5"},{"1":"UCBV07_alt","2":"1","3":"11","4":"2.8"},{"1":"UCBV07_alt","2":"2","3":"11","4":"4.0"},{"1":"UCBV07_alt","2":"3","3":"11","4":"6.0"},{"1":"UCBV07_alt","2":"4","3":"11","4":"9.0"},{"1":"UCBV07_alt","2":"5","3":"11","4":"16.0"},{"1":"UCBV07_alt","2":"6","3":"11","4":"4.0"},{"1":"UCBV17_alt","2":"1","3":"11","4":"3.0"},{"1":"UCBV17_alt","2":"2","3":"11","4":"18.0"},{"1":"UCBV17_alt","2":"3","3":"11","4":"4.5"},{"1":"UCBV17_alt","2":"4","3":"11","4":"7.0"},{"1":"UCBV17_alt","2":"5","3":"11","4":"6.0"},{"1":"UCBV17_alt","2":"6","3":"11","4":"20.0"},{"1":"UCBV38_alt","2":"1","3":"11","4":"4.0"},{"1":"UCBV38_alt","2":"2","3":"11","4":"16.0"},{"1":"UCBV38_alt","2":"3","3":"11","4":"8.0"},{"1":"UCBV38_alt","2":"4","3":"11","4":"4.5"},{"1":"UCBV38_alt","2":"5","3":"11","4":"8.0"},{"1":"UCBV38_alt","2":"6","3":"11","4":"4.0"},{"1":"UCBV97_alt","2":"1","3":"11","4":"4.0"},{"1":"UCBV97_alt","2":"2","3":"11","4":"3.0"},{"1":"UCBV97_alt","2":"3","3":"11","4":"14.0"},{"1":"UCBV97_alt","2":"4","3":"11","4":"12.0"},{"1":"UCBV97_alt","2":"5","3":"11","4":"2.8"},{"1":"UCBV97_alt","2":"6","3":"11","4":"7.0"},{"1":"UCBV101_alt","2":"1","3":"11","4":"18.0"},{"1":"UCBV101_alt","2":"2","3":"11","4":"7.0"},{"1":"UCBV101_alt","2":"3","3":"11","4":"18.0"},{"1":"UCBV101_alt","2":"4","3":"11","4":"6.5"},{"1":"UCBV101_alt","2":"5","3":"11","4":"16.0"},{"1":"UCBV101_alt","2":"6","3":"11","4":"8.0"},{"1":"UCBV133_alt","2":"1","3":"11","4":"2.5"},{"1":"UCBV133_alt","2":"2","3":"11","4":"2.0"},{"1":"UCBV133_alt","2":"3","3":"11","4":"1.5"},{"1":"UCBV133_alt","2":"4","3":"11","4":"3.0"},{"1":"UCBV133_alt","2":"5","3":"11","4":"3.0"},{"1":"UCBV133_alt","2":"6","3":"11","4":"10.0"},{"1":"CHECK","2":"1","3":"11","4":"25.0"},{"1":"CHECK","2":"2","3":"11","4":"14.0"},{"1":"CHECK","2":"3","3":"11","4":"16.0"},{"1":"CHECK","2":"4","3":"11","4":"16.0"},{"1":"CHECK","2":"5","3":"11","4":"8.0"},{"1":"CHECK","2":"6","3":"11","4":"5.0"},{"1":"FUNGICIDE","2":"1","3":"11","4":"1.0"},{"1":"FUNGICIDE","2":"2","3":"11","4":"0.0"},{"1":"FUNGICIDE","2":"3","3":"11","4":"0.0"},{"1":"FUNGICIDE","2":"4","3":"11","4":"0.6"},{"1":"FUNGICIDE","2":"5","3":"11","4":"0.5"},{"1":"FUNGICIDE","2":"6","3":"11","4":"0.0"},{"1":"Pathogen","2":"1","3":"11","4":"20.0"},{"1":"Pathogen","2":"2","3":"11","4":"16.0"},{"1":"Pathogen","2":"3","3":"11","4":"28.0"},{"1":"Pathogen","2":"4","3":"11","4":"6.5"},{"1":"Pathogen","2":"5","3":"11","4":"28.0"},{"1":"Pathogen","2":"6","3":"11","4":"4.5"},{"1":"Water","2":"1","3":"11","4":"8.0"},{"1":"Water","2":"2","3":"11","4":"8.0"},{"1":"Water","2":"3","3":"11","4":"25.0"},{"1":"Water","2":"4","3":"11","4":"25.0"},{"1":"Water","2":"5","3":"11","4":"8.0"},{"1":"Water","2":"6","3":"11","4":"10.0"},{"1":"UCBV03","2":"1","3":"13","4":"3.0"},{"1":"UCBV03","2":"2","3":"13","4":"3.0"},{"1":"UCBV03","2":"3","3":"13","4":"6.0"},{"1":"UCBV03","2":"4","3":"13","4":"8.0"},{"1":"UCBV03","2":"5","3":"13","4":"5.0"},{"1":"UCBV03","2":"6","3":"13","4":"5.5"},{"1":"UCBV05","2":"1","3":"13","4":"3.0"},{"1":"UCBV05","2":"2","3":"13","4":"8.0"},{"1":"UCBV05","2":"3","3":"13","4":"1.5"},{"1":"UCBV05","2":"4","3":"13","4":"1.8"},{"1":"UCBV05","2":"5","3":"13","4":"6.5"},{"1":"UCBV05","2":"6","3":"13","4":"4.8"},{"1":"UCBV06","2":"1","3":"13","4":"2.5"},{"1":"UCBV06","2":"2","3":"13","4":"5.0"},{"1":"UCBV06","2":"3","3":"13","4":"12.0"},{"1":"UCBV06","2":"4","3":"13","4":"8.0"},{"1":"UCBV06","2":"5","3":"13","4":"14.0"},{"1":"UCBV06","2":"6","3":"13","4":"8.0"},{"1":"UCBV07","2":"1","3":"13","4":"2.5"},{"1":"UCBV07","2":"2","3":"13","4":"4.0"},{"1":"UCBV07","2":"3","3":"13","4":"3.0"},{"1":"UCBV07","2":"4","3":"13","4":"2.5"},{"1":"UCBV07","2":"5","3":"13","4":"3.0"},{"1":"UCBV07","2":"6","3":"13","4":"6.0"},{"1":"UCBV17","2":"1","3":"13","4":"2.5"},{"1":"UCBV17","2":"2","3":"13","4":"2.0"},{"1":"UCBV17","2":"3","3":"13","4":"2.5"},{"1":"UCBV17","2":"4","3":"13","4":"3.0"},{"1":"UCBV17","2":"5","3":"13","4":"3.0"},{"1":"UCBV17","2":"6","3":"13","4":"5.0"},{"1":"UCBV38","2":"1","3":"13","4":"2.8"},{"1":"UCBV38","2":"2","3":"13","4":"4.5"},{"1":"UCBV38","2":"3","3":"13","4":"7.0"},{"1":"UCBV38","2":"4","3":"13","4":"10.0"},{"1":"UCBV38","2":"5","3":"13","4":"4.0"},{"1":"UCBV38","2":"6","3":"13","4":"12.0"},{"1":"UCBV97","2":"1","3":"13","4":"8.0"},{"1":"UCBV97","2":"2","3":"13","4":"5.5"},{"1":"UCBV97","2":"3","3":"13","4":"4.0"},{"1":"UCBV97","2":"4","3":"13","4":"16.0"},{"1":"UCBV97","2":"5","3":"13","4":"5.5"},{"1":"UCBV97","2":"6","3":"13","4":"7.0"},{"1":"UCBV101","2":"1","3":"13","4":"16.0"},{"1":"UCBV101","2":"2","3":"13","4":"16.0"},{"1":"UCBV101","2":"3","3":"13","4":"14.0"},{"1":"UCBV101","2":"4","3":"13","4":"25.0"},{"1":"UCBV101","2":"5","3":"13","4":"20.0"},{"1":"UCBV101","2":"6","3":"13","4":"13.0"},{"1":"UCBV133","2":"1","3":"13","4":"4.0"},{"1":"UCBV133","2":"2","3":"13","4":"4.0"},{"1":"UCBV133","2":"3","3":"13","4":"3.0"},{"1":"UCBV133","2":"4","3":"13","4":"4.5"},{"1":"UCBV133","2":"5","3":"13","4":"2.5"},{"1":"UCBV133","2":"6","3":"13","4":"3.0"},{"1":"UCBV05_alt","2":"1","3":"13","4":"3.5"},{"1":"UCBV05_alt","2":"2","3":"13","4":"3.5"},{"1":"UCBV05_alt","2":"3","3":"13","4":"8.0"},{"1":"UCBV05_alt","2":"4","3":"13","4":"8.0"},{"1":"UCBV05_alt","2":"5","3":"13","4":"6.0"},{"1":"UCBV05_alt","2":"6","3":"13","4":"4.5"},{"1":"UCBV06_alt","2":"1","3":"13","4":"3.8"},{"1":"UCBV06_alt","2":"2","3":"13","4":"8.0"},{"1":"UCBV06_alt","2":"3","3":"13","4":"4.5"},{"1":"UCBV06_alt","2":"4","3":"13","4":"9.0"},{"1":"UCBV06_alt","2":"5","3":"13","4":"14.0"},{"1":"UCBV06_alt","2":"6","3":"13","4":"3.8"},{"1":"UCBV07_alt","2":"1","3":"13","4":"3.5"},{"1":"UCBV07_alt","2":"2","3":"13","4":"4.0"},{"1":"UCBV07_alt","2":"3","3":"13","4":"6.0"},{"1":"UCBV07_alt","2":"4","3":"13","4":"9.0"},{"1":"UCBV07_alt","2":"5","3":"13","4":"18.0"},{"1":"UCBV07_alt","2":"6","3":"13","4":"4.0"},{"1":"UCBV17_alt","2":"1","3":"13","4":"3.0"},{"1":"UCBV17_alt","2":"2","3":"13","4":"18.0"},{"1":"UCBV17_alt","2":"3","3":"13","4":"4.5"},{"1":"UCBV17_alt","2":"4","3":"13","4":"12.0"},{"1":"UCBV17_alt","2":"5","3":"13","4":"6.0"},{"1":"UCBV17_alt","2":"6","3":"13","4":"32.0"},{"1":"UCBV38_alt","2":"1","3":"13","4":"4.5"},{"1":"UCBV38_alt","2":"2","3":"13","4":"18.0"},{"1":"UCBV38_alt","2":"3","3":"13","4":"9.0"},{"1":"UCBV38_alt","2":"4","3":"13","4":"4.8"},{"1":"UCBV38_alt","2":"5","3":"13","4":"10.0"},{"1":"UCBV38_alt","2":"6","3":"13","4":"4.0"},{"1":"UCBV97_alt","2":"1","3":"13","4":"4.0"},{"1":"UCBV97_alt","2":"2","3":"13","4":"3.5"},{"1":"UCBV97_alt","2":"3","3":"13","4":"15.0"},{"1":"UCBV97_alt","2":"4","3":"13","4":"13.0"},{"1":"UCBV97_alt","2":"5","3":"13","4":"2.8"},{"1":"UCBV97_alt","2":"6","3":"13","4":"7.5"},{"1":"UCBV101_alt","2":"1","3":"13","4":"20.0"},{"1":"UCBV101_alt","2":"2","3":"13","4":"20.0"},{"1":"UCBV101_alt","2":"3","3":"13","4":"18.0"},{"1":"UCBV101_alt","2":"4","3":"13","4":"7.5"},{"1":"UCBV101_alt","2":"5","3":"13","4":"20.0"},{"1":"UCBV101_alt","2":"6","3":"13","4":"12.0"},{"1":"UCBV133_alt","2":"1","3":"13","4":"3.0"},{"1":"UCBV133_alt","2":"2","3":"13","4":"2.5"},{"1":"UCBV133_alt","2":"3","3":"13","4":"2.5"},{"1":"UCBV133_alt","2":"4","3":"13","4":"4.5"},{"1":"UCBV133_alt","2":"5","3":"13","4":"5.5"},{"1":"UCBV133_alt","2":"6","3":"13","4":"12.0"},{"1":"CHECK","2":"1","3":"13","4":"28.0"},{"1":"CHECK","2":"2","3":"13","4":"25.0"},{"1":"CHECK","2":"3","3":"13","4":"32.0"},{"1":"CHECK","2":"4","3":"13","4":"28.0"},{"1":"CHECK","2":"5","3":"13","4":"8.0"},{"1":"CHECK","2":"6","3":"13","4":"35.0"},{"1":"FUNGICIDE","2":"1","3":"13","4":"1.5"},{"1":"FUNGICIDE","2":"2","3":"13","4":"0.0"},{"1":"FUNGICIDE","2":"3","3":"13","4":"0.0"},{"1":"FUNGICIDE","2":"4","3":"13","4":"1.0"},{"1":"FUNGICIDE","2":"5","3":"13","4":"0.8"},{"1":"FUNGICIDE","2":"6","3":"13","4":"0.0"},{"1":"Pathogen","2":"1","3":"13","4":"22.0"},{"1":"Pathogen","2":"2","3":"13","4":"18.0"},{"1":"Pathogen","2":"3","3":"13","4":"28.0"},{"1":"Pathogen","2":"4","3":"13","4":"6.5"},{"1":"Pathogen","2":"5","3":"13","4":"28.0"},{"1":"Pathogen","2":"6","3":"13","4":"6.0"},{"1":"Water","2":"1","3":"13","4":"10.0"},{"1":"Water","2":"2","3":"13","4":"10.0"},{"1":"Water","2":"3","3":"13","4":"32.0"},{"1":"Water","2":"4","3":"13","4":"35.0"},{"1":"Water","2":"5","3":"13","4":"10.0"},{"1":"Water","2":"6","3":"13","4":"10.0"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+<div id="tidying-the-data" class="section level2">
+<h2>Tidying the data</h2>
+<pre class="r"><code>met_sf= met %&gt;% 
+  separate(tratamento, into =c(&quot;tratamento&quot; ,&quot;cond&quot;))%&gt;% 
+  mutate(cond = case_when(is.na(cond) ~ &quot;extrato&quot;,
+                          !is.na(cond) ~ cond)) %&gt;% 
+  filter(cond != &quot;alt&quot;) %&gt;% 
+  filter(time_dai == max(time_dai)) %&gt;% 
+  mutate(tratamento =  case_when(tratamento == &quot;agua&quot; ~ &quot;Check&quot;,
+                                 tratamento == &quot;extrato&quot; ~ &quot;Pathogen&quot;,
+                                 tratamento != &quot;extrato&quot; &amp;  tratamento != &quot;agua&quot;~ tratamento)) %&gt;% 
+  filter(tratamento != &quot;controle&quot;)%&gt;% 
+filter(tratamento != &quot;Water&quot;) </code></pre>
+<pre><code>## Warning: Expected 2 pieces. Missing pieces filled with `NA` in 390 rows [1,
+## 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, ...].</code></pre>
+<p>Final severity</p>
+<pre class="r"><code>met_sf%&gt;% 
+  filter(time_dai == max(time_dai)) %&gt;% 
+  ggplot(aes(reorder(tratamento,-sev), sev))+
+  geom_jitter(shape =1, size = 2)+
+  geom_boxplot(fill = NA, size = .7)+
+  
+  theme_minimal_hgrid()+
+  theme(axis.text.x = element_text(angle = 45, hjust = 1,))+
+  labs(x = &quot;&quot;,
+       y = &quot;Final severity (%)&quot;)</code></pre>
+<p><img src="main_code_files/figure-html/unnamed-chunk-15-1.png" width="672" /></p>
+<pre class="r"><code>ggsave(&quot;figs/box_metab.png&quot;, dpi = 600, height = 4, width = 7)</code></pre>
+</div>
+<div id="beta-regression-1" class="section level2">
+<h2>Beta regression</h2>
+<pre class="r"><code>met_sf2 = met_sf%&gt;% 
+  mutate(sev = sev/100,
+         sev = case_when(sev == 0 ~ 0.0001, 
+                         sev &gt; 0 ~ sev))
+lm33 = betareg(sev ~ tratamento, data = met_sf2 )
+summary(lm33)</code></pre>
+<pre><code>## 
+## Call:
+## betareg(formula = sev ~ tratamento, data = met_sf2)
+## 
+## Standardized weighted residuals 2:
+##     Min      1Q  Median      3Q     Max 
+## -4.2565 -0.4976  0.0639  0.7331  2.0320 
+## 
+## Coefficients (mean model with logit link):
+##                     Estimate Std. Error z value Pr(&gt;|z|)    
+## (Intercept)          -1.1057     0.1329  -8.320  &lt; 2e-16 ***
+## tratamentoFUNGICIDE  -3.8348     0.4245  -9.034  &lt; 2e-16 ***
+## tratamentoPathogen   -0.5242     0.2030  -2.582  0.00983 ** 
+## tratamentoUCBV03     -1.7034     0.2676  -6.365 1.96e-10 ***
+## tratamentoUCBV05     -1.9525     0.2867  -6.810 9.78e-12 ***
+## tratamentoUCBV06     -1.3238     0.2420  -5.471 4.47e-08 ***
+## tratamentoUCBV07     -2.0125     0.2915  -6.903 5.09e-12 ***
+## tratamentoUCBV101    -0.4339     0.1999  -2.171  0.02994 *  
+## tratamentoUCBV133    -1.9885     0.2896  -6.866 6.59e-12 ***
+## tratamentoUCBV17     -2.1300     0.3012  -7.072 1.52e-12 ***
+## tratamentoUCBV38     -1.5074     0.2538  -5.939 2.87e-09 ***
+## tratamentoUCBV97     -1.3611     0.2443  -5.572 2.52e-08 ***
+## 
+## Phi coefficients (precision model with identity link):
+##       Estimate Std. Error z value Pr(&gt;|z|)    
+## (phi)   48.855      8.454   5.779 7.51e-09 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1 
+## 
+## Type of estimator: ML (maximum likelihood)
+## Log-likelihood:   157 on 13 Df
+## Pseudo R-squared: 0.7075
+## Number of iterations: 39 (BFGS) + 2 (Fisher scoring)</code></pre>
+</div>
+<div id="tukey-test-1" class="section level2">
+<h2>Tukey test</h2>
+<p>Mean severity comparision</p>
+<pre class="r"><code>em33 = emmeans(lm33, &quot;tratamento&quot;, type  = &quot;response&quot;)
+multcomp::cld(em33,Letters = letters, reversed = T)</code></pre>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["tratamento"],"name":[1],"type":["fctr"],"align":["left"]},{"label":["emmean"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["SE"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["df"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["asymp.LCL"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["asymp.UCL"],"name":[6],"type":["dbl"],"align":["right"]},{"label":[".group"],"name":[7],"type":["chr"],"align":["left"]}],"data":[{"1":"CHECK","2":"0.248665116","3":"0.024829215","4":"Inf","5":"0.200000750","6":"0.29732948","7":"a","_rn_":"2"},{"1":"UCBV101","2":"0.176582754","3":"0.021746465","4":"Inf","5":"0.133960465","6":"0.21920504","7":"a","_rn_":"10"},{"1":"Pathogen","2":"0.163835496","3":"0.021066154","4":"Inf","5":"0.122546593","6":"0.20512440","7":"ab","_rn_":"7"},{"1":"UCBV06","2":"0.080949003","3":"0.015076672","4":"Inf","5":"0.051399268","6":"0.11049874","7":"bc","_rn_":"9"},{"1":"UCBV97","2":"0.078218436","3":"0.014811892","4":"Inf","5":"0.049187660","6":"0.10724921","7":"c","_rn_":"5"},{"1":"UCBV38","2":"0.068294838","3":"0.013792541","4":"Inf","5":"0.041261955","6":"0.09532772","7":"c","_rn_":"4"},{"1":"UCBV03","2":"0.056829739","3":"0.012482262","4":"Inf","5":"0.032364955","6":"0.08129452","7":"c","_rn_":"11"},{"1":"UCBV05","2":"0.044862898","3":"0.010914593","4":"Inf","5":"0.023470688","6":"0.06625511","7":"c","_rn_":"12"},{"1":"UCBV133","2":"0.043345448","3":"0.010697343","4":"Inf","5":"0.022379041","6":"0.06431186","7":"c","_rn_":"6"},{"1":"UCBV07","2":"0.042361217","3":"0.010553845","4":"Inf","5":"0.021676062","6":"0.06304637","7":"cd","_rn_":"3"},{"1":"UCBV17","2":"0.037842423","3":"0.009866556","4":"Inf","5":"0.018504329","6":"0.05718052","7":"cd","_rn_":"8"},{"1":"FUNGICIDE","2":"0.007099591","3":"0.002851816","4":"Inf","5":"0.001510136","6":"0.01268905","7":"d","_rn_":"1"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</div>
+<div id="efficacy-1" class="section level2">
+<h2>Efficacy</h2>
+<pre class="r"><code>conf33 = confint(lm33)[1:12,]
+metab = data.frame(em33) %&gt;% 
+  select(tratamento) %&gt;%
+  mutate(logC = as.matrix(summary(lm33)$coefficients$mean[,1]),
+         se = as.matrix(summary(lm33)$coefficients$mean[,2]),
+         mean = 1-(exp(as.matrix(summary(lm33)$coefficients$mean[,1])))) %&gt;% 
+  mutate(CL = 1-exp(conf33[,1]),
+         CU = 1-exp(conf33[,2])) %&gt;% 
+      filter(!tratamento %in% c(&quot;CHECK&quot;, &quot;Water&quot;, &quot;Pathogen&quot;)) %&gt;% 
+  mutate(meio = &quot;Crude extract&quot;)
+metab</code></pre>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["tratamento"],"name":[1],"type":["fctr"],"align":["left"]},{"label":["logC"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["se"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["mean"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["CL"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["CU"],"name":[6],"type":["dbl"],"align":["right"]},{"label":["meio"],"name":[7],"type":["chr"],"align":["left"]}],"data":[{"1":"FUNGICIDE","2":"-3.834849","3":"0.4244825","4":"0.9783954","5":"0.9905979","6":"0.95035603","7":"Crude extract"},{"1":"UCBV03","2":"-1.703443","3":"0.2676371","4":"0.8179443","5":"0.8922565","6":"0.69237803","7":"Crude extract"},{"1":"UCBV05","2":"-1.952499","3":"0.2867232","4":"0.8580811","5":"0.9190939","6":"0.75105724","7":"Crude extract"},{"1":"UCBV06","2":"-1.323778","3":"0.2419624","4":"0.7338720","5":"0.8343728","6":"0.57238850","7":"Crude extract"},{"1":"UCBV07","2":"-2.012493","3":"0.2915399","4":"0.8663449","5":"0.9245210","6":"0.76332924","7":"Crude extract"},{"1":"UCBV101","2":"-0.433929","3":"0.1998886","4":"0.3520418","5":"0.5620732","6":"0.04127841","7":"Crude extract"},{"1":"UCBV133","2":"-1.988496","3":"0.2896043","4":"0.8630989","5":"0.9223940","6":"0.75849916","7":"Crude extract"},{"1":"UCBV17","2":"-2.130003","3":"0.3011738","4":"0.8811631","5":"0.9341445","6":"0.78555744","7":"Crude extract"},{"1":"UCBV38","2":"-1.507438","3":"0.2538239","4":"0.7785233","5":"0.8653294","6":"0.63576356","7":"Crude extract"},{"1":"UCBV97","2":"-1.361059","3":"0.2442825","4":"0.7436108","5":"0.8411577","6":"0.58615909","7":"Crude extract"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</div>
+</div>
+<div id="visualization" class="section level1">
+<h1>Visualization</h1>
+<pre class="r"><code>conf3 = confint(lm3)[1:12,]
+data.frame(em33) %&gt;% 
+  select(tratamento) %&gt;%
+  mutate(logC = as.matrix(summary(lm33)$coefficients$mean[,1]),
+         se = as.matrix(summary(lm33)$coefficients$mean[,2]),
+         mean = 1-(exp(as.matrix(summary(lm33)$coefficients$mean[,1])))) %&gt;% 
+  mutate(CL = 1-exp(conf33[,1]),
+         CU = 1-exp(conf33[,2])) %&gt;% 
+      filter(!tratamento %in% c(&quot;CHECK&quot;, &quot;Water&quot;, &quot;Pathogen&quot;)) %&gt;%  
+  mutate(model = &quot;betareg&quot;) %&gt;% 
+  # bind_rows(eff) %&gt;%
+  ggplot(aes(reorder(tratamento,mean) ,mean*100))+
+
+  geom_point(size = 3, position = position_dodge(width = 1))+
+  geom_errorbar(aes(ymin =CU*100, ymax = CL*100), width = 0.0,
+                position = position_dodge(width = 1), size =1)+
+  scale_color_calc()+
+  labs(x = &quot;&quot;,
+       y =&quot;Control efficacy (%)&quot;,
+       color =&quot;&quot;)+
+  theme_bw()+
+  theme(legend.position = &quot;bottom&quot;)+
+  coord_flip()</code></pre>
+<p><img src="main_code_files/figure-html/unnamed-chunk-19-1.png" width="672" /></p>
+<pre class="r"><code>ggsave(&quot;figs/efficacy_met.png&quot;, dpi = 600, height = 4, width = 5)</code></pre>
+<div id="visualizating-suspension-and-metabolites-efficacy" class="section level2">
+<h2>Visualizating suspension and metabolites efficacy</h2>
+<pre class="r"><code>susp %&gt;% 
+  bind_rows(metab) %&gt;% 
+  filter(!tratamento %in% c(&quot;water&quot;, &quot;UCBV_07_17&quot;, &quot;UCBV133_7&quot;)) %&gt;% #filtra tratamentos indesejados
+  ggplot(aes(reorder(tratamento,mean) ,mean*100, color = meio))+
+
+  geom_point(size = 3, position = position_dodge(width = 1))+
+  geom_errorbar(aes(ymin =CU*100, ymax = CL*100, color = meio), width = 0.0,
+                position = position_dodge(width = 1), size =1)+
+  scale_color_calc()+
+  labs(x = &quot;&quot;,
+       y =&quot;Control efficacy (%)&quot;,
+       color =&quot;&quot;)+
+  theme_bw()+
+  theme(legend.position = &quot;bottom&quot;)+
+  coord_flip()</code></pre>
+<pre><code>## Warning in bind_rows_(x, .id): Unequal factor levels: coercing to character</code></pre>
+<pre><code>## Warning in bind_rows_(x, .id): binding character and factor vector,
+## coercing into character vector
+
+## Warning in bind_rows_(x, .id): binding character and factor vector,
+## coercing into character vector</code></pre>
+<p><img src="main_code_files/figure-html/unnamed-chunk-20-1.png" width="672" /></p>
+<pre class="r"><code>ggsave(&quot;figs/eff_comparison.png&quot;, dpi = 600, height = 5, width = 5)</code></pre>
+</div>
+</div>
+
+<div id="rmd-source-code">JSBBbmFseXNpcw0KDQojIFBhY2thZ2VzDQoNCmBgYHtyIG1lc3NhZ2U9RkFMU0UsIHdhcm5pbmc9RkFMU0V9DQpsaWJyYXJ5ICh0aWR5dmVyc2UpDQpsaWJyYXJ5KGdzaGVldCkNCmxpYnJhcnkoZ2d0aGVtZXMpDQpsaWJyYXJ5KHJlYWR4bCkNCmxpYnJhcnkoYWdyaWNvbGFlKQ0KbGlicmFyeShjb3dwbG90KQ0KbGlicmFyeShlbW1lYW5zKQ0KYGBgDQoNCiMgU3VzcGVuc2lvbg0KDQojIyBMb2FkaW5nIGRhdGENCg0KYGBge3J9DQp1cmw9ICJodHRwczovL2RvY3MuZ29vZ2xlLmNvbS9zcHJlYWRzaGVldHMvZC8xTi1idHlSQ19WeHJoa1NfX25NR01HRVo5UkJHT2Myc21NUFo0R1MzMkd1TS9lZGl0P3VzcD1zaGFyaW5nIg0KDQpkYXRhPWdzaGVldDJ0YmwodXJsKQ0KYGBgDQoNCkhpc3RvZ3JhbXMgb2YgdGhlIHNldmVyaXR5IG9mIGVhY2ggdHJlYXRtZW50DQpgYGB7cn0NCmRhdGEgJT4lIA0KICBuYS5vbWl0KHNldikgJT4lIA0KICBnZ3Bsb3QoYWVzKHNldikpKw0KICBnZW9tX2hpc3RvZ3JhbSgpKw0KICBmYWNldF93cmFwKH50cmF0YW1lbnRvKQ0KDQpgYGANCg0KYGBge3J9DQpkYXRhICU+JSANCiAgZ2dwbG90KGFlcyh0aW1lX2RhaSxzZXYsIGNvbG9yPSB0cmF0YW1lbnRvKSkrDQogIGdlb21fcG9pbnQoKSsNCiAgIGZhY2V0X3dyYXAofnRyYXRhbWVudG8pDQpgYGANCg0KYGBge3J9DQpkYXRhICU+JSANCiAgZ2dwbG90KGFlcyh0aW1lX2RhaSxzZXYsIGNvbG9yPSB0cmF0YW1lbnRvLCBncm91cCA9IHRpbWVfZGFpKSkrDQogIGdlb21faml0dGVyKHNoYXBlID0gMSkrDQogIGdlb21fYm94cGxvdChvdXRsaWVyLmNvbG91ciA9IE5BLCBmaWxsID0gTkEpKw0KICBmYWNldF93cmFwKH50cmF0YW1lbnRvKSsNCiAgdGhlbWVfbWluaW1hbF9oZ3JpZCgpKw0KICBsYWJzKGNvbG9yID0gIiIpKw0KICB0aGVtZShsZWdlbmQucG9zaXRpb24gPSAibm9uZSIpDQpgYGANCg0KDQpgYGB7cn0NCiBkYXRhICU+JSANCiAgZmlsdGVyKHRpbWVfZGFpID09IG1heCh0aW1lX2RhaSkpICU+JSANCiAgZ2dwbG90KGFlcyhyZW9yZGVyKHRyYXRhbWVudG8sLXNldiksIHNldikpKw0KICBnZW9tX2ppdHRlcihzaGFwZSA9MSwgc2l6ZSA9IDIpKw0KICBnZW9tX2JveHBsb3QoZmlsbCA9IE5BLCBzaXplID0gLjcpKw0KICANCiAgdGhlbWVfbWluaW1hbF9oZ3JpZCgpKw0KICB0aGVtZShheGlzLnRleHQueCA9IGVsZW1lbnRfdGV4dChhbmdsZSA9IDQ1LCBoanVzdCA9IDEsKSkrDQogIGxhYnMoeCA9ICIiLA0KICAgICAgIHkgPSAiRmluYWwgc2V2ZXJpdHkgKCUpIikNCmdnc2F2ZSgiZmlncy9ib3hfc3VzcC5wbmciLCBkcGkgPSA2MDAsIGhlaWdodCA9IDQsIHdpZHRoID0gNykNCmBgYA0KDQpGaWx0ZXJpbmcganVzdCB0aGUgc2V2ZXJpdHkgZXZhbHVhdGVkIGF0IHRoZSBsYXN0IGRheQ0KDQpgYGB7cn0NCmRhdGFfc2Y9IGRhdGEgJT4lIA0KICBmaWx0ZXIodGltZV9kYWkgPT0gbWF4KHRpbWVfZGFpKSkNCmBgYA0KDQoNCiMgQmV0YSByZWdyZXNzaW9uDQoNCmBgYHtyfQ0KbGlicmFyeShiZXRhcmVnKQ0KYGBgDQoNCmBgYHtyfQ0KZGF0YV9zZjIgPSBkYXRhX3NmJT4lIA0KICBtdXRhdGUoc2V2ID0gc2V2LzEwMCwNCiAgICAgICAgIHNldiA9IGNhc2Vfd2hlbihzZXYgPT0gMCB+IDAuMDAwMSwgDQogICAgICAgICAgICAgICAgICAgICAgICAgc2V2ID4gMCB+IHNldikpDQpsbTMgPSBiZXRhcmVnKHNldiB+IHRyYXRhbWVudG8sIGRhdGEgPSBkYXRhX3NmMikNCnN1bW1hcnkobG0zKQ0KYGBgDQoNCiMjIFR1a2V5IHRlc3QNCk1lYW4gc2V2ZXJpdHkgY29tcGFyaXNpb24NCmBgYHtyfQ0KZW0zID0gZW1tZWFucyhsbTMsICJ0cmF0YW1lbnRvIiwgdHlwZSAgPSAicmVzcG9uc2UiKQ0KbXVsdGNvbXA6OmNsZChlbTMsTGV0dGVycyA9IGxldHRlcnMsIHJldmVyc2VkID0gVCkNCmBgYA0KDQojIyBFZmZpY2FjeSANCmBgYHtyfQ0KY29uZjMgPSBjb25maW50KGxtMylbMToxMyxdDQpzdXNwID0gZGF0YS5mcmFtZShlbTMpICU+JSANCiAgc2VsZWN0KHRyYXRhbWVudG8pICU+JQ0KICBtdXRhdGUobG9nQyA9IGFzLm1hdHJpeChzdW1tYXJ5KGxtMykkY29lZmZpY2llbnRzJG1lYW5bLDFdKSwNCiAgICAgICAgIHNlID0gYXMubWF0cml4KHN1bW1hcnkobG0zKSRjb2VmZmljaWVudHMkbWVhblssMl0pLA0KICAgICAgICAgbWVhbiA9IDEtKGV4cChhcy5tYXRyaXgoc3VtbWFyeShsbTMpJGNvZWZmaWNpZW50cyRtZWFuWywxXSkpKSkgJT4lIA0KICBtdXRhdGUoQ0wgPSAxLWV4cChjb25mM1ssMV0pLA0KICAgICAgICAgQ1UgPSAxLWV4cChjb25mM1ssMl0pKSAlPiUgDQogICAgZmlsdGVyKCF0cmF0YW1lbnRvICVpbiUgYygiQ0hFQ0siKSkgJT4lIA0KICBtdXRhdGUobWVpbyA9ICAiU3VzcGVuc2lvbiIpDQpzdXNwDQpgYGANCg0KDQojIEVmZmljYWN5IHZpc3VhbGl6YXRpb24NCg0KYGBge3J9DQpjb25mMyA9IGNvbmZpbnQobG0zKVsxOjEzLF0NCmRhdGEuZnJhbWUoZW0zKSAlPiUgDQogIHNlbGVjdCh0cmF0YW1lbnRvKSAlPiUNCiAgbXV0YXRlKGxvZ0MgPSBhcy5tYXRyaXgoc3VtbWFyeShsbTMpJGNvZWZmaWNpZW50cyRtZWFuWywxXSksDQogICAgICAgICBzZSA9IGFzLm1hdHJpeChzdW1tYXJ5KGxtMykkY29lZmZpY2llbnRzJG1lYW5bLDJdKSwNCiAgICAgICAgIG1lYW4gPSAxLShleHAoYXMubWF0cml4KHN1bW1hcnkobG0zKSRjb2VmZmljaWVudHMkbWVhblssMV0pKSkpICU+JSANCiAgbXV0YXRlKENMID0gMS1leHAoY29uZjNbLDFdKSwNCiAgICAgICAgIENVID0gMS1leHAoY29uZjNbLDJdKSkgJT4lIA0KICAgIGZpbHRlcighdHJhdGFtZW50byAlaW4lIGMoIkNIRUNLIikpICU+JSANCiAgIyBtdXRhdGUobW9kZWwgPSAiYmV0YXJlZyIpICU+JSANCiAgIyBiaW5kX3Jvd3MoZWZmKSAlPiUNCiAgZ2dwbG90KGFlcyhyZW9yZGVyKHRyYXRhbWVudG8sbWVhbikgLG1lYW4qMTAwKSkrDQoNCiAgZ2VvbV9wb2ludChzaXplID0gMywgcG9zaXRpb24gPSBwb3NpdGlvbl9kb2RnZSh3aWR0aCA9IDEpKSsNCiAgZ2VvbV9lcnJvcmJhcihhZXMoeW1pbiA9Q1UqMTAwLCB5bWF4ID0gQ0wqMTAwICksIHdpZHRoID0gMC4wLA0KICAgICAgICAgICAgICAgIHBvc2l0aW9uID0gcG9zaXRpb25fZG9kZ2Uod2lkdGggPSAxKSwgc2l6ZSA9MSkrDQogIHNjYWxlX2NvbG9yX2NhbGMoKSsNCiAgbGFicyh4ID0gIiIsDQogICAgICAgeSA9IkNvbnRyb2wgZWZmaWNhY3kgKCUpIiwNCiAgICAgICBjb2xvciA9IiIpKw0KICB0aGVtZV9idygpKw0KICB0aGVtZShsZWdlbmQucG9zaXRpb24gPSAiYm90dG9tIikrDQogIGNvb3JkX2ZsaXAoKQ0KZ2dzYXZlKCJmaWdzL2VmZmljYWN5X3N1c3Blbi5wbmciLCBkcGkgPSA2MDAsIGhlaWdodCA9IDQsIHdpZHRoID0gNSkNCg0KYGBgDQoNCg0KIyBNZXRhYm9saXRlcw0KDQpgYGB7cn0NCm1ldCA9IGdzaGVldDJ0YmwoImh0dHBzOi8vZG9jcy5nb29nbGUuY29tL3NwcmVhZHNoZWV0cy9kLzEwLW5sdUZSaFZ6UExRUFNjekRFcjlzektjaVdYTnhjbmFydDNaQWZpaTdNL2VkaXQ/dXNwPXNoYXJpbmciKQ0KbWV0DQpgYGANCg0KIyMgVGlkeWluZyB0aGUgZGF0YQ0KYGBge3J9DQptZXRfc2Y9IG1ldCAlPiUgDQogIHNlcGFyYXRlKHRyYXRhbWVudG8sIGludG8gPWMoInRyYXRhbWVudG8iICwiY29uZCIpKSU+JSANCiAgbXV0YXRlKGNvbmQgPSBjYXNlX3doZW4oaXMubmEoY29uZCkgfiAiZXh0cmF0byIsDQogICAgICAgICAgICAgICAgICAgICAgICAgICFpcy5uYShjb25kKSB+IGNvbmQpKSAlPiUgDQogIGZpbHRlcihjb25kICE9ICJhbHQiKSAlPiUgDQogIGZpbHRlcih0aW1lX2RhaSA9PSBtYXgodGltZV9kYWkpKSAlPiUgDQogIG11dGF0ZSh0cmF0YW1lbnRvID0gIGNhc2Vfd2hlbih0cmF0YW1lbnRvID09ICJhZ3VhIiB+ICJDaGVjayIsDQogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICB0cmF0YW1lbnRvID09ICJleHRyYXRvIiB+ICJQYXRob2dlbiIsDQogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICB0cmF0YW1lbnRvICE9ICJleHRyYXRvIiAmICB0cmF0YW1lbnRvICE9ICJhZ3VhIn4gdHJhdGFtZW50bykpICU+JSANCiAgZmlsdGVyKHRyYXRhbWVudG8gIT0gImNvbnRyb2xlIiklPiUgDQpmaWx0ZXIodHJhdGFtZW50byAhPSAiV2F0ZXIiKSANCmBgYA0KDQoNCkZpbmFsIHNldmVyaXR5DQpgYGB7cn0NCm1ldF9zZiU+JSANCiAgZmlsdGVyKHRpbWVfZGFpID09IG1heCh0aW1lX2RhaSkpICU+JSANCiAgZ2dwbG90KGFlcyhyZW9yZGVyKHRyYXRhbWVudG8sLXNldiksIHNldikpKw0KICBnZW9tX2ppdHRlcihzaGFwZSA9MSwgc2l6ZSA9IDIpKw0KICBnZW9tX2JveHBsb3QoZmlsbCA9IE5BLCBzaXplID0gLjcpKw0KICANCiAgdGhlbWVfbWluaW1hbF9oZ3JpZCgpKw0KICB0aGVtZShheGlzLnRleHQueCA9IGVsZW1lbnRfdGV4dChhbmdsZSA9IDQ1LCBoanVzdCA9IDEsKSkrDQogIGxhYnMoeCA9ICIiLA0KICAgICAgIHkgPSAiRmluYWwgc2V2ZXJpdHkgKCUpIikNCmdnc2F2ZSgiZmlncy9ib3hfbWV0YWIucG5nIiwgZHBpID0gNjAwLCBoZWlnaHQgPSA0LCB3aWR0aCA9IDcpDQpgYGANCg0KDQoNCiMjIEJldGEgcmVncmVzc2lvbg0KDQpgYGB7cn0NCm1ldF9zZjIgPSBtZXRfc2YlPiUgDQogIG11dGF0ZShzZXYgPSBzZXYvMTAwLA0KICAgICAgICAgc2V2ID0gY2FzZV93aGVuKHNldiA9PSAwIH4gMC4wMDAxLCANCiAgICAgICAgICAgICAgICAgICAgICAgICBzZXYgPiAwIH4gc2V2KSkNCmxtMzMgPSBiZXRhcmVnKHNldiB+IHRyYXRhbWVudG8sIGRhdGEgPSBtZXRfc2YyICkNCnN1bW1hcnkobG0zMykNCmBgYA0KDQojIyBUdWtleSB0ZXN0DQpNZWFuIHNldmVyaXR5IGNvbXBhcmlzaW9uDQoNCmBgYHtyfQ0KZW0zMyA9IGVtbWVhbnMobG0zMywgInRyYXRhbWVudG8iLCB0eXBlICA9ICJyZXNwb25zZSIpDQptdWx0Y29tcDo6Y2xkKGVtMzMsTGV0dGVycyA9IGxldHRlcnMsIHJldmVyc2VkID0gVCkNCmBgYA0KDQojIyBFZmZpY2FjeQ0KDQoNCg0KYGBge3J9DQpjb25mMzMgPSBjb25maW50KGxtMzMpWzE6MTIsXQ0KbWV0YWIgPSBkYXRhLmZyYW1lKGVtMzMpICU+JSANCiAgc2VsZWN0KHRyYXRhbWVudG8pICU+JQ0KICBtdXRhdGUobG9nQyA9IGFzLm1hdHJpeChzdW1tYXJ5KGxtMzMpJGNvZWZmaWNpZW50cyRtZWFuWywxXSksDQogICAgICAgICBzZSA9IGFzLm1hdHJpeChzdW1tYXJ5KGxtMzMpJGNvZWZmaWNpZW50cyRtZWFuWywyXSksDQogICAgICAgICBtZWFuID0gMS0oZXhwKGFzLm1hdHJpeChzdW1tYXJ5KGxtMzMpJGNvZWZmaWNpZW50cyRtZWFuWywxXSkpKSkgJT4lIA0KICBtdXRhdGUoQ0wgPSAxLWV4cChjb25mMzNbLDFdKSwNCiAgICAgICAgIENVID0gMS1leHAoY29uZjMzWywyXSkpICU+JSANCiAgICAgIGZpbHRlcighdHJhdGFtZW50byAlaW4lIGMoIkNIRUNLIiwgIldhdGVyIiwgIlBhdGhvZ2VuIikpICU+JSANCiAgbXV0YXRlKG1laW8gPSAiQ3J1ZGUgZXh0cmFjdCIpDQptZXRhYg0KYGBgDQoNCiMgVmlzdWFsaXphdGlvbg0KDQpgYGB7cn0NCmNvbmYzID0gY29uZmludChsbTMpWzE6MTIsXQ0KZGF0YS5mcmFtZShlbTMzKSAlPiUgDQogIHNlbGVjdCh0cmF0YW1lbnRvKSAlPiUNCiAgbXV0YXRlKGxvZ0MgPSBhcy5tYXRyaXgoc3VtbWFyeShsbTMzKSRjb2VmZmljaWVudHMkbWVhblssMV0pLA0KICAgICAgICAgc2UgPSBhcy5tYXRyaXgoc3VtbWFyeShsbTMzKSRjb2VmZmljaWVudHMkbWVhblssMl0pLA0KICAgICAgICAgbWVhbiA9IDEtKGV4cChhcy5tYXRyaXgoc3VtbWFyeShsbTMzKSRjb2VmZmljaWVudHMkbWVhblssMV0pKSkpICU+JSANCiAgbXV0YXRlKENMID0gMS1leHAoY29uZjMzWywxXSksDQogICAgICAgICBDVSA9IDEtZXhwKGNvbmYzM1ssMl0pKSAlPiUgDQogICAgICBmaWx0ZXIoIXRyYXRhbWVudG8gJWluJSBjKCJDSEVDSyIsICJXYXRlciIsICJQYXRob2dlbiIpKSAlPiUgIA0KICBtdXRhdGUobW9kZWwgPSAiYmV0YXJlZyIpICU+JSANCiAgIyBiaW5kX3Jvd3MoZWZmKSAlPiUNCiAgZ2dwbG90KGFlcyhyZW9yZGVyKHRyYXRhbWVudG8sbWVhbikgLG1lYW4qMTAwKSkrDQoNCiAgZ2VvbV9wb2ludChzaXplID0gMywgcG9zaXRpb24gPSBwb3NpdGlvbl9kb2RnZSh3aWR0aCA9IDEpKSsNCiAgZ2VvbV9lcnJvcmJhcihhZXMoeW1pbiA9Q1UqMTAwLCB5bWF4ID0gQ0wqMTAwKSwgd2lkdGggPSAwLjAsDQogICAgICAgICAgICAgICAgcG9zaXRpb24gPSBwb3NpdGlvbl9kb2RnZSh3aWR0aCA9IDEpLCBzaXplID0xKSsNCiAgc2NhbGVfY29sb3JfY2FsYygpKw0KICBsYWJzKHggPSAiIiwNCiAgICAgICB5ID0iQ29udHJvbCBlZmZpY2FjeSAoJSkiLA0KICAgICAgIGNvbG9yID0iIikrDQogIHRoZW1lX2J3KCkrDQogIHRoZW1lKGxlZ2VuZC5wb3NpdGlvbiA9ICJib3R0b20iKSsNCiAgY29vcmRfZmxpcCgpDQpnZ3NhdmUoImZpZ3MvZWZmaWNhY3lfbWV0LnBuZyIsIGRwaSA9IDYwMCwgaGVpZ2h0ID0gNCwgd2lkdGggPSA1KQ0KDQpgYGANCg0KDQojIyBWaXN1YWxpemF0aW5nIHN1c3BlbnNpb24gYW5kIG1ldGFib2xpdGVzIGVmZmljYWN5DQoNCmBgYHtyfQ0Kc3VzcCAlPiUgDQogIGJpbmRfcm93cyhtZXRhYikgJT4lIA0KICBmaWx0ZXIoIXRyYXRhbWVudG8gJWluJSBjKCJ3YXRlciIsICJVQ0JWXzA3XzE3IiwgIlVDQlYxMzNfNyIpKSAlPiUgI2ZpbHRyYSB0cmF0YW1lbnRvcyBpbmRlc2VqYWRvcw0KICBnZ3Bsb3QoYWVzKHJlb3JkZXIodHJhdGFtZW50byxtZWFuKSAsbWVhbioxMDAsIGNvbG9yID0gbWVpbykpKw0KDQogIGdlb21fcG9pbnQoc2l6ZSA9IDMsIHBvc2l0aW9uID0gcG9zaXRpb25fZG9kZ2Uod2lkdGggPSAxKSkrDQogIGdlb21fZXJyb3JiYXIoYWVzKHltaW4gPUNVKjEwMCwgeW1heCA9IENMKjEwMCwgY29sb3IgPSBtZWlvKSwgd2lkdGggPSAwLjAsDQogICAgICAgICAgICAgICAgcG9zaXRpb24gPSBwb3NpdGlvbl9kb2RnZSh3aWR0aCA9IDEpLCBzaXplID0xKSsNCiAgc2NhbGVfY29sb3JfY2FsYygpKw0KICBsYWJzKHggPSAiIiwNCiAgICAgICB5ID0iQ29udHJvbCBlZmZpY2FjeSAoJSkiLA0KICAgICAgIGNvbG9yID0iIikrDQogIHRoZW1lX2J3KCkrDQogIHRoZW1lKGxlZ2VuZC5wb3NpdGlvbiA9ICJib3R0b20iKSsNCiAgY29vcmRfZmxpcCgpDQpnZ3NhdmUoImZpZ3MvZWZmX2NvbXBhcmlzb24ucG5nIiwgZHBpID0gNjAwLCBoZWlnaHQgPSA1LCB3aWR0aCA9IDUpDQoNCmBgYA0KDQoNCg==</div>
+
+
+Copyright 2017 Emerson Del Ponte
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
